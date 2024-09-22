@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Listifyr.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Listifyr"
+    xmlns:view="clr-namespace:Listifyr.View"
+    Shell.TabBarBackgroundColor="#1F1D1D"
+    Shell.TabBarForegroundColor="#EE6352"
+    Shell.TabBarTitleColor="#EE6352"
+    Shell.TabBarUnselectedColor="AliceBlue"
+    Shell.BackgroundColor="#0F0606"
+
+    Title="Listifyr">
+
+    <Shell.TitleView>
+        <Grid HorizontalOptions="Fill" Padding="-16,0,0,0">
+            <Label x:Name ="pageTitle"
+                   TextColor="AliceBlue"
+                   Background="#0F0606"
+                   FontSize="40"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   />
+        </Grid>
+    </Shell.TitleView>
+
+    <TabBar>
+        <ShellContent
+            Title="Категорії"
+            Icon="homepage_icon.svg"
+            ContentTemplate="{DataTemplate view:CategoriesPage}"/>
+
+        <ShellContent
+            Title="Списки"
+            Icon="bookmark_svgrepo_com.svg"
+            ContentTemplate="{DataTemplate view:ListsPage}"/>
+
+        <ShellContent
+            Title="Меню"
+            Icon="ellipsis_h_icon.svg"
+            ContentTemplate="{DataTemplate view:OthersPage}"/>
+
+    </TabBar>
+
+</Shell>

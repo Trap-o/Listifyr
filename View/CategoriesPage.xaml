@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Listifyr.View.CategoriesPage"
+             xmlns:local="clr-namespace:Listifyr"
+             Title="Категорії">
+
+    <ContentPage.BindingContext>
+        <local:CategoriesViewModel />
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <VerticalStackLayout BackgroundColor="#0F0606" Padding="30,0" Spacing="25">
+            <CollectionView ItemsSource="{Binding Categories}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                             Span="2" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="10" Margin="5" BorderColor="#1F1D1D" BackgroundColor="#1F1D1D" HasShadow="False">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnCategoryTapped" NumberOfTapsRequired="1"/>
+                            </Frame.GestureRecognizers>
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Image Source="{Binding Image}" WidthRequest="100" HeightRequest="100"/>
+                                <Label Text="{Binding Name}" FontSize="Title" HorizontalOptions="Center" VerticalOptions="Fill" FontAttributes="Bold" TextColor="AliceBlue"/>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+        
+    </ScrollView>
+</ContentPage>
+
+
+
+<!--<Image
+                Source="dotnet_bot.png"
+                HeightRequest="185"
+                Aspect="AspectFit"
+                SemanticProperties.Description="dot net bot in a race car number eight" />
+
+            <Label
+                Text="Hello, World!"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" />
+
+            <Label
+                Text="Welcome to &#10;.NET Multi-platform App UI"
+                Style="{StaticResource SubHeadline}"
+                SemanticProperties.HeadingLevel="Level2"
+                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />-->
+
+<!--<Button
+                x:Name="MoviesBtn"
+                Text="Movies" 
+                SemanticProperties.Hint="Counts the number of times you click"
+                Clicked="OnMoviesClicked"
+                HorizontalOptions="Fill" />-->
+
+<!--<Grid RowSpacing="10" ColumnSpacing="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Text="Фільми" Grid.Column="0" Grid.Row="0"/>
+                <Button Text="Серіали" Grid.Column="1" Grid.Row="0"/>
+                
+                <Button Text="Книги" Grid.Column="0" Grid.Row="1"/>
+                <Button Text="Манга" Grid.Column="1" Grid.Row="1"/>
+                
+                <Button Text="Ігри" Grid.Column="0" Grid.Row="2"/>
+                <Button Text="Аніме" Grid.Column="2" Grid.Row="2"/>
+
+            </Grid>-->
