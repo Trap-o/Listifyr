@@ -25,5 +25,7 @@ namespace Listifyr
                 new() { Name = "Комікси", Image = "comic.png" }
             };
         }
+
+        
     }
 }
