@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Listifyr.View.OthersPage"
+
+             Title="Меню">
+    <VerticalStackLayout BackgroundColor="#0F0606" HorizontalOptions="Fill" Padding="30,0" Spacing="20" VerticalOptions="FillAndExpand">
+        <Button
+            x:Name="projectPageButton"
+            Text="Сторінка проєкту"
+            BackgroundColor="#1F1D1D"
+            FontSize="30"
+            FontAttributes="Bold"
+            TextColor="AliceBlue"
+            Margin="0,20,0,0"
+            Clicked="ProjectPage_Clicked"/>
+        <Button
+            x:Name="instructionPageButton"
+            Text="Інструкція"
+            BackgroundColor="#1F1D1D"
+            FontSize="30"
+            FontAttributes="Bold"
+            TextColor="AliceBlue"
+
+            Clicked="InstructionPage_Clicked"/>
+        <Button
+            x:Name="helpButton"
+            Text="Допомога"
+            BackgroundColor="#1F1D1D"
+            FontSize="30"
+            FontAttributes="Bold"
+            TextColor="AliceBlue"
+
+            Clicked="HelpButton_Clicked"/>
+    </VerticalStackLayout>
+</ContentPage>

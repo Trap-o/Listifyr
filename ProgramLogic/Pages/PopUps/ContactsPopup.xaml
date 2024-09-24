@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               x:Class="Listifyr.ProgramLogic.Pages.PopUps.ContactsPopup">
+
+    <VerticalStackLayout BackgroundColor="#1F1D1D" HorizontalOptions="Center">
+        <Label
+            HorizontalTextAlignment="Start"
+            LineBreakMode="WordWrap"
+            FontSize="22"
+            TextColor="AliceBlue"
+            Margin="10"
+            Padding="20"
+            Text="Контакти розробника:"/>
+        <Label HorizontalOptions="Center"
+            Margin="0,10,0,10"
+            LineBreakMode="WordWrap"
+            HorizontalTextAlignment="Center"
+            FontSize="20"
+            TextColor="AliceBlue"
+            Text="Електронна пошта:&#10;yatsiks69@gmail.com&#10;Телеграм: @Trap_o"/>
+        <Button
+            Text="OK"
+            BackgroundColor="#EE6352"
+            Margin="0,20,0,10"
+            HorizontalOptions="Center"
+            Padding="70,0"
+            CornerRadius="20"
+            FontSize="20"
+            FontAttributes="Bold"
+            TextColor="AliceBlue"
+            Clicked="OnOKButtonClicked" />
+    </VerticalStackLayout>
+    
+</toolkit:Popup>
