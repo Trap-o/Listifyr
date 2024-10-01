@@ -5,12 +5,12 @@
              xmlns:local="clr-namespace:Listifyr"
              Title="Списки">
     <Grid>
-        <VerticalStackLayout>
-            <Label 
-                Text="Welcome to .NET MAUI!"
-                VerticalOptions="Center" 
-                HorizontalOptions="Center" />
-        </VerticalStackLayout>
+    <VerticalStackLayout>
+        <Label 
+            Text="Welcome to .NET MAUI!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+    </VerticalStackLayout>
         
         <Button
             x:Name="AddButton"
