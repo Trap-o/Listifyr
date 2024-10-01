@@ -11,6 +11,7 @@
                 VerticalOptions="Center" 
                 HorizontalOptions="Center" />
         </VerticalStackLayout>
+        
         <Button
             x:Name="AddButton"
             CornerRadius="60"
