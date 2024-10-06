@@ -1,9 +1,47 @@
-﻿namespace Listifyr
+﻿using SQLite;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace Listifyr
 {
     public class Category
     {
-        public int Id { get; set; }
-        public string? Name { get; set; }
-        public string? Image { get; set; }
+
+        //public int id;
+        private string? name;
+        private string? imagePath;
+
+        [PrimaryKey, AutoIncrement]
+        //[Display(AutoGenerateField = false)]
+        public int ID { get; set; }
+
+        public string Name
+        {
+            get { return this.name; }
+            set
+            {
+                this.name = value;
+                RaisePropertyChanged("Name");
+            }
+        }
+
+        //[Display(AutoGenerateField = false)]
+        public string ImagePath
+        {
+            get { return this.imagePath; }
+            set
+            {
+                this.imagePath = value;
+                this.RaisePropertyChanged("Image");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void RaisePropertyChanged(String name)
+        {
+            if (PropertyChanged != null)
+                this.PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
     }
 }

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Listifyr
 {
-    interface IListsViewModel
+    interface ICatalogueViewModel
     {
-        void AddListPanel(List list);
-        void RemoveListPanel(List list);
+        void AddListPanel(Catalogue list);
+        void RemoveListPanel(Catalogue list);
         void AddListItem(int itemId, int listId, int categoryId);
-        void RemoveListItem(ListItem item);
+        void RemoveListItem(MediaItem item);
     }
 }

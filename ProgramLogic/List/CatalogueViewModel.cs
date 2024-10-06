@@ -8,20 +8,20 @@ using System.Threading.Tasks;
 
 namespace Listifyr
 {
-    class ListsViewModel : IListsViewModel
+    class CatalogueViewModel : ICatalogueViewModel
     {
-        public ObservableCollection<List> Lists {  get; set; }
+        public ObservableCollection<Catalogue> Catalogues {  get; set; }
         public ObservableCollection<Category> Categories { get; set; }
 
-        public void AddListItem(int itemId, int listId, int categoryId)
+        public void AddListItem(int itemId, int catalogueId, int categoryId)
         {
-            ListItem newItem = new()
+            MediaItem newItem = new()
             {
                 CategoryID = categoryId,
-                ListID = listId
+                CatalogueID = catalogueId
             };
-            var category = Categories.FirstOrDefault(c => c.Id == categoryId);
-            var list = Lists.FirstOrDefault(l => l.Id == listId);
+            var category = Categories.FirstOrDefault(c => c.ID == categoryId);
+            var list = Catalogues.FirstOrDefault(l => l.Id == catalogueId);
             if (list != null)
             {
                 //Lists.Add(newItem);
@@ -29,17 +29,17 @@ namespace Listifyr
            
         }
 
-        public void AddListPanel(List list)
+        public void AddListPanel(Catalogue list)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveListItem(ListItem item)
+        public void RemoveListItem(MediaItem item)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveListPanel(List list)
+        public void RemoveListPanel(Catalogue list)
         {
             throw new NotImplementedException();
         }

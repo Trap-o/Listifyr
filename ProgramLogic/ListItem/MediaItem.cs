@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Listifyr.ItemTypes
 {
-    interface IListItem
+    public class MediaItem : IMediaItem
     {
         public int Id { get; set; }
         public string? Name { get; set; }
@@ -15,6 +15,6 @@ namespace Listifyr.ItemTypes
         public string? Description { get; set; }
         public string? Type { get; set; }
         public int CategoryID { get; set; }
-        public int ListID { get; set; }
+        public int CatalogueID { get; set; }
     }
 }

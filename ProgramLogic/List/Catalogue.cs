@@ -1,6 +1,6 @@
 ﻿namespace Listifyr
 {
-    public class List
+    public class Catalogue
     {
         public int Id { get; set; }
         public string? Name { get; set; }
