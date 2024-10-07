@@ -4,16 +4,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Listifyr
 {
-    public class Category
+    public class Categories
     {
-
-        //public int id;
         private string? name;
         private string? imagePath;
 
         [PrimaryKey, AutoIncrement]
         //[Display(AutoGenerateField = false)]
-        public int ID { get; set; }
+        public int CategoryID { get; set; }
 
         public string Name
         {

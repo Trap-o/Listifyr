@@ -11,7 +11,7 @@ namespace Listifyr
     class CatalogueViewModel : ICatalogueViewModel
     {
         public ObservableCollection<Catalogue> Catalogues {  get; set; }
-        public ObservableCollection<Category> Categories { get; set; }
+        public ObservableCollection<Categories> Categories { get; set; }
 
         public void AddListItem(int itemId, int catalogueId, int categoryId)
         {
@@ -20,7 +20,7 @@ namespace Listifyr
                 CategoryID = categoryId,
                 CatalogueID = catalogueId
             };
-            var category = Categories.FirstOrDefault(c => c.ID == categoryId);
+            var category = Categories.FirstOrDefault(c => c.CategoryID == categoryId);
             var list = Catalogues.FirstOrDefault(l => l.Id == catalogueId);
             if (list != null)
             {

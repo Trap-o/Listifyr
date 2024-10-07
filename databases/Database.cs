@@ -23,7 +23,6 @@ namespace Listifyr.databases
 
         public static string DatabasePath =>
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "database.db");
-            //Path.Combine(Environment.CurrentDirectory, databaseName);
 
     }
 }

@@ -8,9 +8,10 @@
     <ContentPage.BindingContext>
         <local:CategoriesViewModel />
     </ContentPage.BindingContext>
+
     <ScrollView>
         <VerticalStackLayout BackgroundColor="#0F0606" Padding="30,0" Spacing="25">
-            <CollectionView x:Name="CategoryCollectionView">
+            <CollectionView ItemsSource="{Binding Categories}" x:Name="CategoryCollectionView">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical"
                              Span="2" />

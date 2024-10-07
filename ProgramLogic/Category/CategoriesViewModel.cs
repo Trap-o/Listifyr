@@ -11,10 +11,10 @@ namespace Listifyr
 {
     public class CategoriesViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<Category> categories;
-        private Category category;
+        private ObservableCollection<Categories> categories;
+        private Categories category;
 
-        public Category SelectedCategory
+        public Categories SelectedCategory
         {
             get
             {
@@ -27,7 +27,7 @@ namespace Listifyr
             }
         }
 
-        public ObservableCollection<Category> Categories
+        public ObservableCollection<Categories> Categories
         {
             get
             {
@@ -45,15 +45,15 @@ namespace Listifyr
             GenerateCategories();
         }
 
-        private void GenerateCategories()
+        private async void GenerateCategories()
         {
-            Categories = new ObservableCollection<Category>();
-            PopulateDB();
+            Categories = new ObservableCollection<Categories>();
+            await PopulateDB();
         }
 
-        private async void PopulateDB()
+        private async Task PopulateDB()
         {
-            foreach (Category category in Categories)
+            foreach (Categories category in Categories)
             {
                 var item = await App.Database.GetCategoryAsync(category);
                 if (item == null)

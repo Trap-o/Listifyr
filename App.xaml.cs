@@ -15,13 +15,11 @@ namespace Listifyr
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            // Логіку для обробки винятків можна додати тут
             Console.WriteLine($"Необроблена виняткова ситуація: {e.ExceptionObject}");
         }
 
         private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
         {
-            // Логіку для обробки необроблених винятків у асинхронних задачах можна додати тут
             Console.WriteLine($"Необроблена виняткова ситуація у Task: {e.Exception}");
         }
 

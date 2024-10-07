@@ -14,32 +14,30 @@ namespace Listifyr.databases
         public SQLiteDatabase()
         {
             _database = new SQLiteAsyncConnection(Database.DatabasePath, Database.Flags);
-            //InitializeDatabaseAsync();
+            InitializeDatabaseAsync().ConfigureAwait(false);
         }
 
         private async Task InitializeDatabaseAsync()
         {
-            await _database.CreateTableAsync<Category>();
+            await _database.CreateTableAsync<Categories>();
             await AddInitialDataAsync();
         }
 
         private async Task AddInitialDataAsync()
         {
 
-            var existingCategories = await _database.Table<Category>().CountAsync();
+            var existingCategories = await _database.Table<Categories>().CountAsync();
 
             if (existingCategories == 0)
             {
 
-                var initialCategories = new List<Category>
+                var initialCategories = new List<Categories>
                 {
-                    new Category { Name = "Фільми", ImagePath = "movie.png" },
-                    new Category { Name = "Книги", ImagePath = "book.png" },
-                    new Category { Name = "Ігри", ImagePath = "game.png" },
-                    new Category { Name = "Манга", ImagePath = "manga.png" }
+                    new Categories { Name = "Фільми", ImagePath = "movie.png" },
+                    new Categories { Name = "Книги", ImagePath = "book.png" },
+                    new Categories { Name = "Ігри", ImagePath = "game.png" }
                 };
 
-                // Додавання початкових категорій до таблиці
                 foreach (var category in initialCategories)
                 {
                     await _database.InsertAsync(category);
@@ -47,29 +45,29 @@ namespace Listifyr.databases
             }
         }
 
-        public async Task<List<Category>> GetCategoriesAsync()
+        public async Task<List<Categories>> GetCategoriesAsync()
         {
-            return await _database.Table<Category>().ToListAsync();
+            return await _database.Table<Categories>().ToListAsync();
         }
 
-        public async Task<Category> GetCategoryAsync(Category category)
+        public async Task<Categories> GetCategoryAsync(Categories category)
         {
-            return await _database.Table<Category>().Where(c => c.ID == category.ID).FirstOrDefaultAsync();
+            return await _database.Table<Categories>().Where(c => c.CategoryID == category.CategoryID).FirstOrDefaultAsync();
         }
 
-        public async Task<int> AddCategoryAsync(Category category)
+        public async Task<int> AddCategoryAsync(Categories category)
         {
             return await _database.InsertAsync(category);
         }
 
-        public Task<int> DeleteCategoryAsync(Category category)
+        public Task<int> DeleteCategoryAsync(Categories category)
         {
             return _database.DeleteAsync(category);
         }
 
-        public Task<int> UpdateCategoryAsync(Category category)
+        public Task<int> UpdateCategoryAsync(Categories category)
         {
-            if(category.ID != 0)
+            if (category.CategoryID != 0)
                 return _database.UpdateAsync(category);
             else
                 return _database.InsertAsync(category);
