@@ -63,7 +63,7 @@
 
 	<ItemGroup>
 	  <EmbeddedResource Include="database.db">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </EmbeddedResource>
 	</ItemGroup>
 

@@ -13,8 +13,39 @@ namespace Listifyr.databases
         readonly SQLiteAsyncConnection _database;
         public SQLiteDatabase()
         {
-            _database = new SQLiteAsyncConnection(Database.DatabasePath, Database.Flags);
+            var dbPath = Database.DatabasePath;
+
+            // Перевіряємо, чи існує база даних у кеші пристрою
+            if (!File.Exists(dbPath))
+            {
+                // Копіюємо базу даних з вбудованого ресурсу до локальної директорії додатка
+                CopyDatabaseFromResource(dbPath);
+            }
+
+            // Ініціалізуємо підключення до бази даних
+            _database = new SQLiteAsyncConnection(dbPath, Database.Flags);
+
+            // Ініціалізуємо базу даних
             InitializeDatabaseAsync().ConfigureAwait(false);
+        }
+        private void CopyDatabaseFromResource(string dbPath)
+        {
+            // Отримуємо назву простору імен проекту
+            var assembly = typeof(SQLiteDatabase).Assembly;
+            var resourceName = "Listifyr.database.db"; // Вкажіть повний шлях до файлу бази даних у вашому проекті
+
+            using (Stream resource = assembly.GetManifestResourceStream(resourceName))
+            {
+                if (resource == null)
+                {
+                    throw new Exception($"Не вдалося знайти ресурс: {resourceName}");
+                }
+
+                using (var fileStream = new FileStream(dbPath, FileMode.Create, FileAccess.Write))
+                {
+                    resource.CopyTo(fileStream);
+                }
+            }
         }
 
         private async Task InitializeDatabaseAsync()

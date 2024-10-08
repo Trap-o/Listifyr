@@ -1,3 +1,4 @@
+using Listifyr.databases;
 using Microsoft.Maui.Controls;
 
 namespace Listifyr.View;
@@ -12,6 +13,7 @@ public partial class CategoriesPage : ContentPage
     protected async override void OnAppearing()
     {
         base.OnAppearing();
+        DisplayAlert("Шлях до бази даних", Database.DatabasePath, "OK");
         try
         {
             var categories = await App.Database.GetCategoriesAsync();
