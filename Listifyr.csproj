@@ -87,6 +87,9 @@
 	  <MauiXaml Update="ProgramLogic\Pages\MainPages\OthersPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="ProgramLogic\Pages\NestedPages\CategoryPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="ProgramLogic\Pages\PopUps\ContactsPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -94,6 +97,12 @@
 
 	<ItemGroup>
 	  <Folder Include="Data\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="ProgramLogic\Pages\MainPages\ListsPage.xaml.cs">
+	    <DependentUpon>ListsPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 </Project>

@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Listifyr.databases.SQLiteDatabase;
 
 namespace Listifyr
 {
@@ -23,7 +24,7 @@ namespace Listifyr
             set
             {
                 category = value;
-                OnPropertyChanged("SelectedItem");
+                OnPropertyChanged("SelectedCategory");
             }
         }
 
@@ -40,41 +41,29 @@ namespace Listifyr
             }
         }
 
-        public CategoriesViewModel()
-        {
-            GenerateCategories();
-        }
+        //public CategoriesViewModel()
+        //{
+        //    GenerateCategories();
+        //}
 
-        private async void GenerateCategories()
-        {
-            Categories = new ObservableCollection<Categories>();
-            await PopulateDB();
-        }
+        //private async void GenerateCategories()
+        //{
+        //    Categories = new ObservableCollection<Categories>();
+        //    await PopulateDB<Categories>(categories.ToList());
+        //}
 
-        private async Task PopulateDB()
-        {
-            foreach (Categories category in Categories)
-            {
-                var item = await App.Database.GetCategoryAsync(category);
-                if (item == null)
-                {
-                    await App.Database.AddCategoryAsync(category);
-                }
-            }
-        }
-        private async void OnAddNewItem()
-        {
-            await App.Database.AddCategoryAsync(SelectedCategory);
-            Categories.Add(SelectedCategory);
-            await App.Current.MainPage.Navigation.PopAsync();
-        }
+        //private async void OnAddNewItem()
+        //{
+        //    await App.Database.AddItemAsync(SelectedCategory);
+        //    Categories.Add(SelectedCategory);
+        //    await App.Current.MainPage.Navigation.PopAsync();
+        //}
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged(string name)
         {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(name));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

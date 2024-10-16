@@ -1,4 +1,5 @@
 ﻿using Listifyr.databases;
+using Listifyr.View;
 
 namespace Listifyr
 {
@@ -11,7 +12,6 @@ namespace Listifyr
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
             MainPage = new AppShell();
-
         }
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

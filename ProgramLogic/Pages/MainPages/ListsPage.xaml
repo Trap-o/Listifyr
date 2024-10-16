@@ -4,24 +4,45 @@
              x:Class="Listifyr.View.ListsPage"
              xmlns:local="clr-namespace:Listifyr"
              Title="Списки">
-    <Grid>
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
-        
-        <Button
-            x:Name="AddButton"
-            CornerRadius="60"
-            ImageSource="add.png"
-            HeightRequest="80"
-            WidthRequest="80"
-            VerticalOptions="End"
-            HorizontalOptions="End"
-            Margin="50"
-            BackgroundColor="#EE6352"
-        />
-    </Grid>
+
+    <ContentPage.BindingContext>
+        <local:CataloguesViewModel />
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <Grid>
+        <VerticalStackLayout BackgroundColor="#0F0606" Padding="30,0" Spacing="25">
+            <CollectionView ItemsSource="{Binding Catalogues}" x:Name="CatalogueCollectionView">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                         Span="2" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="10" Margin="5" BorderColor="#1F1D1D" BackgroundColor="#1F1D1D" HasShadow="False">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnCatalogueTapped" NumberOfTapsRequired="1"/>
+                            </Frame.GestureRecognizers>
+                                <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Label Text="{Binding Name}" FontSize="Title" HorizontalOptions="Center" VerticalOptions="Fill" FontAttributes="Bold" TextColor="AliceBlue"/>
+                                </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+            <Button
+                x:Name="AddButton"
+                CornerRadius="60"
+                ImageSource="add.png"
+                HeightRequest="80"
+                WidthRequest="80"
+                VerticalOptions="End"
+                HorizontalOptions="End"
+                Margin="50"
+                BackgroundColor="#EE6352"
+                Clicked="AddButton_Clicked"
+            />
+        </Grid>
+    </ScrollView>
 </ContentPage>

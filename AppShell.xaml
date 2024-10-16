@@ -10,17 +10,19 @@
     Shell.TabBarTitleColor="#EE6352"
     Shell.TabBarUnselectedColor="AliceBlue"
     Shell.BackgroundColor="#0F0606"
-
+    Shell.FlyoutBehavior="Disabled"
+    Shell.ForegroundColor="#EE6352"
+    Shell.TitleColor="AliceBlue"
+    
     Title="Listifyr">
 
     <Shell.TitleView>
-        <Grid HorizontalOptions="Fill" Padding="-16,0,0,0">
+        <Grid Padding="0,0,0,0">
             <Label x:Name ="pageTitle"
                    TextColor="AliceBlue"
                    Background="#0F0606"
                    FontSize="40"
-                   VerticalOptions="Center"
-                   HorizontalOptions="Center"
+                   VerticalOptions="Start"
                    />
         </Grid>
     </Shell.TitleView>
@@ -42,5 +44,4 @@
             ContentTemplate="{DataTemplate view:OthersPage}"/>
 
     </TabBar>
-
 </Shell>

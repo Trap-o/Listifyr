@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using Listifyr.ItemTypes;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,7 +27,9 @@ namespace Listifyr.databases
             _database = new SQLiteAsyncConnection(dbPath, Database.Flags);
 
             // Ініціалізуємо базу даних
-            InitializeDatabaseAsync().ConfigureAwait(false);
+            InitializeDatabaseAsync<Categories>().ConfigureAwait(false);
+            InitializeDatabaseAsync<Catalogues>().ConfigureAwait(false);
+            InitializeDatabaseAsync<MediaItems>().ConfigureAwait(false);
         }
         private void CopyDatabaseFromResource(string dbPath)
         {
@@ -48,60 +51,49 @@ namespace Listifyr.databases
             }
         }
 
-        private async Task InitializeDatabaseAsync()
+        private async Task InitializeDatabaseAsync<T>() where T : class, new()
         {
-            await _database.CreateTableAsync<Categories>();
-            await AddInitialDataAsync();
+            await _database.CreateTableAsync<T>();
         }
 
-        private async Task AddInitialDataAsync()
+        public async Task<List<T>> GetAsync<T>() where T : class, new()
         {
+            return await _database.Table<T>().ToListAsync();
+        }
+        //TODO поміняти на дженерік
+        public async Task<T> GetItemByIDAsync<T>(int id) where T : class, IDatabaseItem, new()
+        {
+            return await _database.Table<T>().Where(i => i.Id == id).FirstOrDefaultAsync();
+        }
 
-            var existingCategories = await _database.Table<Categories>().CountAsync();
+        public async Task<int> AddItemAsync<T>(T item) where T : class, new()
+        {
+            return await _database.InsertAsync(item);
+        }
 
-            if (existingCategories == 0)
+        public Task<int> DeleteItemAsync<T>(T item) where T : class, new()
+        {
+            return _database.DeleteAsync(item);
+        }
+
+        public Task<int> UpdateItemAsync<T>(T item) where T : class, IDatabaseItem, new()
+        {
+            if (item.Id != 0)
+                return _database.UpdateAsync(item);
+            else
+                return _database.InsertAsync(item);
+        }
+
+        public static async Task PopulateDB<T>(List<T> items) where T : class, IDatabaseItem, new()
+        {
+            foreach (T item in items)
             {
-
-                var initialCategories = new List<Categories>
+                var existingItem = await App.Database.GetItemByIDAsync<T>(item.Id);
+                if (existingItem == null)
                 {
-                    new Categories { Name = "Фільми", ImagePath = "movie.png" },
-                    new Categories { Name = "Книги", ImagePath = "book.png" },
-                    new Categories { Name = "Ігри", ImagePath = "game.png" }
-                };
-
-                foreach (var category in initialCategories)
-                {
-                    await _database.InsertAsync(category);
+                    await App.Database.AddItemAsync(item);
                 }
             }
-        }
-
-        public async Task<List<Categories>> GetCategoriesAsync()
-        {
-            return await _database.Table<Categories>().ToListAsync();
-        }
-
-        public async Task<Categories> GetCategoryAsync(Categories category)
-        {
-            return await _database.Table<Categories>().Where(c => c.CategoryID == category.CategoryID).FirstOrDefaultAsync();
-        }
-
-        public async Task<int> AddCategoryAsync(Categories category)
-        {
-            return await _database.InsertAsync(category);
-        }
-
-        public Task<int> DeleteCategoryAsync(Categories category)
-        {
-            return _database.DeleteAsync(category);
-        }
-
-        public Task<int> UpdateCategoryAsync(Categories category)
-        {
-            if (category.CategoryID != 0)
-                return _database.UpdateAsync(category);
-            else
-                return _database.InsertAsync(category);
         }
     }
 }
