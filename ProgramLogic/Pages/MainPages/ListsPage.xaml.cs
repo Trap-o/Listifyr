@@ -3,7 +3,6 @@ using static Listifyr.databases.SQLiteDatabase;
 
 public partial class ListsPage : ContentPage
 {
-    public Command LongPressCommand { get; set; }
     public ListsPage()
 	{
 		InitializeComponent();
@@ -14,11 +13,8 @@ public partial class ListsPage : ContentPage
     {
         try
         {
-            var catalogues = await App.Database.GetAsync<Catalogues>();
-
-            var collectionView = this.FindByName<CollectionView>("CatalogueCollectionView");
-            collectionView.ItemsSource = catalogues;
-
+            var catalogues = (CataloguesViewModel)BindingContext;
+            await catalogues.LoadCataloguesAsync();
         }
         catch (Exception ex)
         {
@@ -34,9 +30,11 @@ public partial class ListsPage : ContentPage
 
     private async void AddButton_Clicked(object sender, EventArgs e)
     {
-        string newCatalogueName = await DisplayPromptAsync("Новий список", "Введіть назву списку");
-        var addedCatalogue = new Catalogues { Name = newCatalogueName };
-        await App.Database.AddItemAsync<Catalogues>(addedCatalogue);
+        //string newCatalogueName = await DisplayPromptAsync("Новий список", "Введіть назву списку");
+        //var addedCatalogue = new Catalogues { Name = newCatalogueName };
+        //await App.Database.AddItemAsync<Catalogues>(addedCatalogue);
+        CataloguesViewModel cataloguesViewModel = new CataloguesViewModel();
+        cataloguesViewModel.AddCatalogue();
         OnAppearing();
     }
 }

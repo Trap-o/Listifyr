@@ -41,23 +41,7 @@ namespace Listifyr
             }
         }
 
-        //public CategoriesViewModel()
-        //{
-        //    GenerateCategories();
-        //}
 
-        //private async void GenerateCategories()
-        //{
-        //    Categories = new ObservableCollection<Categories>();
-        //    await PopulateDB<Categories>(categories.ToList());
-        //}
-
-        //private async void OnAddNewItem()
-        //{
-        //    await App.Database.AddItemAsync(SelectedCategory);
-        //    Categories.Add(SelectedCategory);
-        //    await App.Current.MainPage.Navigation.PopAsync();
-        //}
 
         public event PropertyChangedEventHandler PropertyChanged;
 

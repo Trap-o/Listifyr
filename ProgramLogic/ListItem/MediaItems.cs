@@ -16,6 +16,8 @@ namespace Listifyr.ItemTypes
         private double? rate;
         private string? description;
         private string? type;
+        private string? poster;
+        private string? release_date;
         public int CategoryID { get; set; }
         public int CatalogueID { get; set; }
 
@@ -69,10 +71,28 @@ namespace Listifyr.ItemTypes
                 RaisePropertyChanged("Type");
             }
         }
+        public string? Poster
+        {
+            get { return this.poster; }
+            set
+            {
+                this.poster = value;
+                RaisePropertyChanged("Poster");
+            }
+        }
+        public string? Release_Date
+        {
+            get { return this.release_date; }
+            set
+            {
+                this.release_date = value;
+                RaisePropertyChanged("Release_Date");
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void RaisePropertyChanged(String value)
+        private void RaisePropertyChanged(string value)
         {
             if (PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(value));

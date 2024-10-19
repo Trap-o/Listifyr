@@ -57,8 +57,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Data\**" />
+	  <Compile Remove="Data\**" />
+	  <EmbeddedResource Remove="Data\**" />
+	  <MauiCss Remove="Data\**" />
+	  <MauiXaml Remove="Data\**" />
+	  <None Remove="Data\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="database.db" />
-	  <None Remove="Data\database.db" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -72,6 +80,7 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.91" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.91" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.10" />
 		<PackageReference Include="System.ObjectModel" Version="4.3.0" />
@@ -90,13 +99,15 @@
 	  <MauiXaml Update="ProgramLogic\Pages\NestedPages\CategoryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="useless\SearchPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="useless\SelectedSearchItem.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="ProgramLogic\Pages\PopUps\ContactsPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Data\" />
 	</ItemGroup>
 
 	<ItemGroup>
