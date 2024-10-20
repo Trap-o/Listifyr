@@ -1,5 +1,7 @@
 //using Listifyr.ProgramLogic.Pages.NestedPages;
 
+using Listifyr.ProgramLogic.Pages.NestedPages;
+
 namespace Listifyr.View;
 public partial class CategoryPage : ContentPage
 {
@@ -62,6 +64,6 @@ public partial class CategoryPage : ContentPage
         //await DisplayAlert("Перемога", $"Натиснуто на кнопку додавання", "OK");
 
         string data = Title;
-        //await Navigation.PushAsync(new SearchPage(data));
+        await Navigation.PushAsync(new CreateItemPage(data));
     }
 }
