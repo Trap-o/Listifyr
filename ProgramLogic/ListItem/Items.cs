@@ -1,4 +1,4 @@
-﻿using Listifyr.databases;
+﻿using Listifyr.ProgramLogic.databases;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -9,30 +9,30 @@ using System.Threading.Tasks;
 
 namespace Listifyr.ItemTypes
 {
-    public class MediaItems : IDatabaseItem//IMediaItem
+    public class Items : IDatabaseItem//IMediaItem
     {
-        private string? name;
+        private string? itemname;
         private string? status;
         private double? rate;
         private string? description;
         private string? type;
         private string? poster;
         private string? release_date;
-        public int CategoryID { get; set; }
-        public int CatalogueID { get; set; }
+        public int ID_Category { get; set; }
+        public int? ID_Catalogue { get; set; }
 
         [PrimaryKey, AutoIncrement]
         //[Display(AutoGenerateField = false)]
-        public int MediaItemID { get; set; }
-        public int Id => MediaItemID;
+        public int ItemID { get; set; }
+        public int Id => ItemID;
 
-        public string? Name
+        public string? ItemName
         {
-            get { return this.name; }
+            get { return this.itemname; }
             set
             {
-                this.name = value;
-                RaisePropertyChanged("Name");
+                this.itemname = value;
+                RaisePropertyChanged("ItemName");
             }
         }
         public string? Status

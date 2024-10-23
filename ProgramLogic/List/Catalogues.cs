@@ -1,4 +1,4 @@
-﻿using Listifyr.databases;
+﻿using Listifyr.ProgramLogic.databases;
 using SQLite;
 using System.ComponentModel;
 

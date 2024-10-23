@@ -12,6 +12,6 @@ namespace Listifyr
         void AddListPanel(Catalogues list);
         void RemoveListPanel(Catalogues list);
         void AddListItem(int itemId, int listId, int categoryId);
-        void RemoveListItem(MediaItems item);
+        void RemoveListItem(Items item);
     }
 }

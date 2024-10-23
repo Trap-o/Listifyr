@@ -12,14 +12,14 @@
             TextColor="AliceBlue"
             Margin="10"
             Padding="20"
-            Text="Контакти розробника:"/>
+            Text="Developer's contacts:"/>
         <Label HorizontalOptions="Center"
             Margin="0,10,0,10"
             LineBreakMode="WordWrap"
             HorizontalTextAlignment="Center"
             FontSize="20"
             TextColor="AliceBlue"
-            Text="Електронна пошта:&#10;yatsiks69@gmail.com&#10;Телеграм: @Trap_o"/>
+            Text="Email:&#10;yatsiks69@gmail.com&#10;Telegram: @Trap_o"/>
         <Button
             Text="OK"
             BackgroundColor="#EE6352"

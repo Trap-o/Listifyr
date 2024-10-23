@@ -1,13 +1,7 @@
 ﻿using Listifyr.ItemTypes;
 using SQLite;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Listifyr.databases
+namespace Listifyr.ProgramLogic.databases
 {
     public class SQLiteDatabase
     {
@@ -16,26 +10,21 @@ namespace Listifyr.databases
         {
             var dbPath = Database.DatabasePath;
 
-            // Перевіряємо, чи існує база даних у кеші пристрою
             if (!File.Exists(dbPath))
             {
-                // Копіюємо базу даних з вбудованого ресурсу до локальної директорії додатка
                 CopyDatabaseFromResource(dbPath);
             }
 
-            // Ініціалізуємо підключення до бази даних
             _database = new SQLiteAsyncConnection(dbPath, Database.Flags);
 
-            // Ініціалізуємо базу даних
             InitializeDatabaseAsync<Categories>().ConfigureAwait(false);
             InitializeDatabaseAsync<Catalogues>().ConfigureAwait(false);
-            InitializeDatabaseAsync<MediaItems>().ConfigureAwait(false);
+            InitializeDatabaseAsync<Items>().ConfigureAwait(false);
         }
         private void CopyDatabaseFromResource(string dbPath)
         {
-            // Отримуємо назву простору імен проекту
             var assembly = typeof(SQLiteDatabase).Assembly;
-            var resourceName = "Listifyr.database.db"; // Вкажіть повний шлях до файлу бази даних у вашому проекті
+            var resourceName = "Listifyr.database.db";
 
             using (Stream resource = assembly.GetManifestResourceStream(resourceName))
             {
@@ -56,14 +45,32 @@ namespace Listifyr.databases
             await _database.CreateTableAsync<T>();
         }
 
+        public async Task<List<T>> LoadTableByIDAsync<T>(int id) where T : class, new()
+        {
+            var query = $"SELECT * FROM {typeof(T).Name} WHERE ID_Category = ?";
+            var table = await _database.QueryAsync<T>(query, id);
+            return table.ToList();
+        }
+
+        public async Task<int?> GetIDByNameAsync<T>(string tableName, string columnName, string value) where T : class, IDatabaseItem, new()
+        {
+            return await _database.ExecuteScalarAsync<int?>($"SELECT CategoryID FROM {tableName} WHERE {columnName} = ?", value);
+        }
+
         public async Task<List<T>> GetAsync<T>() where T : class, new()
         {
             return await _database.Table<T>().ToListAsync();
         }
-        //TODO поміняти на дженерік
+
         public async Task<T> GetItemByIDAsync<T>(int id) where T : class, IDatabaseItem, new()
         {
-            return await _database.Table<T>().Where(i => i.Id == id).FirstOrDefaultAsync();
+            var item = await _database.Table<T>().Where(i => i.Id == id).FirstOrDefaultAsync();
+            if (item == null)
+            {
+                throw new Exception($"Item with ID {id} not found.");
+            }
+
+            return item;
         }
 
         public async Task<int> AddItemAsync<T>(T item) where T : class, new()

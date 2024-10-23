@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Listifyr.ProgramLogic.ListItem
 {
-    internal class MediaItemsViewModel : INotifyPropertyChanged
+    internal class ItemsViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<MediaItems> mediaItems;
+        private ObservableCollection<Items> mediaItems;
 
-        public ObservableCollection<MediaItems> MediaItems
+        public ObservableCollection<Items> MediaItems
         {
             get
             {
@@ -33,6 +33,17 @@ namespace Listifyr.ProgramLogic.ListItem
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
+        public void ChangeFieldForAPI(string API)
+        {
+            switch (API)
+            {
+                case "TMDB":
+                    //mediaItems;
+                    break;
 
+                default:
+                    break;
+            }
+        }
     }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Listifyr.ProgramLogic.Pages.NestedPages.SelectedSearchItem"
+             Title="Search">
+    
+    <ScrollView>
+        <StackLayout Padding="10" BackgroundColor="#0F0606" >
+            <Image x:Name="MoviePoster" HeightRequest="350" Margin="20"/>
+            <Label x:Name="MovieTitleLabel"
+                   FontSize="35"
+                   FontAttributes="Bold"
+                   TextColor="AliceBlue"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Margin="0, 0, 0, 20" 
+                   LineBreakMode="CharacterWrap"/>
+            <Label x:Name="ReleaseDateLabel" FontSize="20" TextColor="AliceBlue" Margin="0, 0, 0, 20" />
+            <Label x:Name="OverviewLabel" FontSize="18" TextColor="AliceBlue" FontAttributes="Italic" Margin="30, 0, 30, 0" HorizontalOptions="Fill" LineBreakMode="WordWrap"/>
+            <Button x:Name="AddButton" Text="Select" Margin="30, 20, 30, 20" TextColor="AliceBlue" BackgroundColor="#1F1D1D" Clicked="AddButton_Clicked"/>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

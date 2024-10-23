@@ -32,7 +32,6 @@ namespace Listifyr
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-        //public ObservableCollection<Categories> Categories { get; set; }
 
         public async Task LoadCataloguesAsync()
         {

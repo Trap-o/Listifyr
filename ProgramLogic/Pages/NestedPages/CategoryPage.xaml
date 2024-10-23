@@ -10,9 +10,8 @@
     </ContentPage.BindingContext>
     <ScrollView>
         <Grid>
-            
             <VerticalStackLayout BackgroundColor="#0F0606" Padding="30,0" Spacing="25">
-                <CollectionView ItemsSource="{Binding Catalogues}" x:Name="CatalogueCollectionView">
+                <CollectionView ItemsSource="{Binding Items}" x:Name="ItemsCollectionView">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Vertical"
                      Span="2" />
@@ -25,7 +24,9 @@
                                     <!--<TapGestureRecognizer Tapped="OnCatalogueTapped" NumberOfTapsRequired="1"/>-->
                                 </Frame.GestureRecognizers>
                                 <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                                    <Label Text="{Binding Name}" FontSize="Title" HorizontalOptions="Center" VerticalOptions="Fill" FontAttributes="Bold" TextColor="AliceBlue"/>
+                                    <Image Source="{Binding Poster}" WidthRequest="100" HeightRequest="100"/>
+                                    <Label Text="{Binding ItemName}" FontSize="Title" HorizontalOptions="Center" LineBreakMode="WordWrap" VerticalOptions="Fill" FontAttributes="Bold" TextColor="AliceBlue"/>
+                                    <Label Text="{Binding Status}" FontSize="Subtitle" HorizontalOptions="Center" VerticalOptions="Fill" TextColor="AliceBlue"/>
                                 </StackLayout>
                             </Frame>
                         </DataTemplate>
@@ -44,7 +45,7 @@
                 BackgroundColor="#EE6352"
                 Clicked="AddButton_Clicked"
             />
-            <!--<Label x:Name="LabelForEmptyCategory" Text="" TextColor="AliceBlue" FontSize="35" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" IsVisible="True" Padding="20,0"/>-->
+            <Label x:Name="LabelForEmptyCategory" Text="" TextColor="AliceBlue" FontSize="35" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" IsVisible="True" Padding="20,0"/>
         </Grid>
     </ScrollView>
 </ContentPage>

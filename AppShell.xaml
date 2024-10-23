@@ -29,17 +29,17 @@
 
     <TabBar>
         <ShellContent
-            Title="Категорії"
+            Title="Categories"
             Icon="homepage_icon.svg"
             ContentTemplate="{DataTemplate view:CategoriesPage}"/>
 
         <ShellContent
-            Title="Списки"
+            Title="Catalogues"
             Icon="bookmark_svgrepo_com.svg"
             ContentTemplate="{DataTemplate view:ListsPage}"/>
 
         <ShellContent
-            Title="Меню"
+            Title="Menu"
             Icon="ellipsis_h_icon.svg"
             ContentTemplate="{DataTemplate view:OthersPage}"/>
 

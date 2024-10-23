@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Listifyr.View.ListsPage"
              xmlns:local="clr-namespace:Listifyr"
-             Title="Списки">
+             Title="Catalogues">
 
     <ContentPage.BindingContext>
         <local:CataloguesViewModel />

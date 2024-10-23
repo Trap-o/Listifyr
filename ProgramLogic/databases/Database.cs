@@ -6,20 +6,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Listifyr.databases
+namespace Listifyr.ProgramLogic.databases
 {
     public static class Database
     {
 
         public const string databaseName = "database.db";
 
-        public const SQLite.SQLiteOpenFlags Flags =
+        public const SQLiteOpenFlags Flags =
         // open the database in read/write mode
-        SQLite.SQLiteOpenFlags.ReadWrite |
+        SQLiteOpenFlags.ReadWrite |
         // create the database if it doesn't exist
-        SQLite.SQLiteOpenFlags.Create |
+        SQLiteOpenFlags.Create |
         // enable multi-threaded database access
-        SQLite.SQLiteOpenFlags.SharedCache;
+        SQLiteOpenFlags.SharedCache;
 
         public static string DatabasePath =>
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "database.db");

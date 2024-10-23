@@ -1,10 +1,24 @@
-//using Listifyr.ProgramLogic.Pages.NestedPages;
-
+using Listifyr.ItemTypes;
 using Listifyr.ProgramLogic.Pages.NestedPages;
+using System.Collections.ObjectModel;
 
 namespace Listifyr.View;
 public partial class CategoryPage : ContentPage
 {
+    private ObservableCollection<Items> mediaItems;
+    public ObservableCollection<Items> MediaItems
+    {
+        get
+        {
+            return mediaItems;
+        }
+        set
+        {
+            mediaItems = value;
+            OnPropertyChanged("MediaItems");
+        }
+    }
+
     private string? _pageTitle;
     public CategoryPage() => InitializeComponent();
     public CategoryPage(string title)
@@ -12,42 +26,66 @@ public partial class CategoryPage : ContentPage
         InitializeComponent();
         _pageTitle = title;
     }
-    protected override void OnAppearing()
+    protected async override void OnAppearing()
     {
-        base.OnAppearing();
-        // Встановлюємо заголовок тут
         this.Title = _pageTitle;
-        //this.LabelForEmptyCategory.Text = $"Додайте {ChangeLabelText()}, натиснувши кнопку внизу сторінки!";
+
+        try
+        {
+            var categoryID = await App.Database.GetIDByNameAsync<Categories>("Categories", "Name", _pageTitle);
+
+            var items = await App.Database.LoadTableByIDAsync<Items>((int)categoryID);
+            var collectionView = this.FindByName<CollectionView>("ItemsCollectionView");
+            collectionView.ItemsSource = items;
+
+            if (items.Count == 0)
+                this.LabelForEmptyCategory.Text = $"Add your first {ChangeLabelText()} by pressing the button!";
+            else
+                this.LabelForEmptyCategory.Text = "";
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Failed to load catalogues: {ex.Message}", "OK");
+        }
+
+        base.OnAppearing();
     }
+
+    public async Task LoadItemsAsync()
+    {
+        var items = await App.Database.GetAsync<Items>();
+        MediaItems = new ObservableCollection<Items>(items);
+    }
+    //
 
     private string ChangeLabelText()
     {
         string emptyElementName = "";
         switch (Title)
         {
-            case "Фільми":
-                emptyElementName = "свій перший фільм";
+            case "Movies":
+                emptyElementName = "movie";
                 break;
-            case "Серіали":
-                emptyElementName = "свій перший серіал";
+            case "Series":
+                emptyElementName = "series";
                 break;
-            case "Манга":
-                emptyElementName = "свою першу мангу";
+            case "Manga":
+                emptyElementName = "manga";
                 break;
-            case "Комікси":
-                emptyElementName = "свій перший комікс";
+            case "Comics":
+                emptyElementName = "comics";
                 break;
-            case "Книги":
-                emptyElementName = "свою першу книгу";
+            case "Books":
+                emptyElementName = "book";
                 break;
-            case "Ранобе":
-                emptyElementName = "своє перше ранобе";
+            case "Ranobe":
+                emptyElementName = "ranobe";
                 break;
-            case "Ігри":
-                emptyElementName = "свою першу гру";
+            case "Games":
+                emptyElementName = "game";
                 break;
-            case "Аніме":
-                emptyElementName = "своє перше аніме";
+            case "Anime":
+                emptyElementName = "anime";
                 break;
         }
         return emptyElementName;
@@ -55,15 +93,7 @@ public partial class CategoryPage : ContentPage
 
     private async void AddButton_Clicked(object sender, EventArgs e)
     {
-        ////string newCatalogueName = await DisplayPromptAsync("Новий список", "Введіть назву списку");
-        ////var addedCatalogue = new Catalogues { Name = newCatalogueName };
-        ////await App.Database.AddItemAsync<Catalogues>(addedCatalogue);
-        //CataloguesViewModel cataloguesViewModel = new CataloguesViewModel();
-        //cataloguesViewModel.AddCatalogue();
-        //OnAppearing();
-        //await DisplayAlert("Перемога", $"Натиснуто на кнопку додавання", "OK");
-
         string data = Title;
-        await Navigation.PushAsync(new CreateItemPage(data));
+        await Navigation.PushAsync(new SearchPage(data));
     }
 }

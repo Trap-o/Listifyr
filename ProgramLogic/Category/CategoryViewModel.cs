@@ -11,9 +11,9 @@ namespace Listifyr.ProgramLogic.Category
 {
     internal class CategoryViewModel
     {
-        private ObservableCollection<MediaItems> mediaItems;
+        private ObservableCollection<Items> mediaItems;
 
-        public ObservableCollection<MediaItems> MediaItems
+        public ObservableCollection<Items> MediaItems
         {
             get
             {
@@ -34,8 +34,8 @@ namespace Listifyr.ProgramLogic.Category
         }
         public async Task LoadMediaItemsAsync()
         {
-            var mediaItems = await App.Database.GetAsync<MediaItems>();
-            MediaItems = new ObservableCollection<MediaItems>(mediaItems);
+            var mediaItems = await App.Database.GetAsync<Items>();
+            MediaItems = new ObservableCollection<Items>(mediaItems);
         }
         //public async Task AddMediaItem()
         //{
