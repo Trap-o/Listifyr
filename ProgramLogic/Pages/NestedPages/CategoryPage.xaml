@@ -5,9 +5,7 @@
              xmlns:local="clr-namespace:Listifyr"
              Title="">
 
-    <ContentPage.BindingContext>
-        <local:CataloguesViewModel />
-    </ContentPage.BindingContext>
+
     <ScrollView>
         <Grid>
             <VerticalStackLayout BackgroundColor="#0F0606" Padding="30,0" Spacing="25">
@@ -21,11 +19,11 @@
                         <DataTemplate>
                             <Frame Padding="10" Margin="5" BorderColor="#1F1D1D" BackgroundColor="#1F1D1D" HasShadow="False">
                                 <Frame.GestureRecognizers>
-                                    <!--<TapGestureRecognizer Tapped="OnCatalogueTapped" NumberOfTapsRequired="1"/>-->
+                                    <TapGestureRecognizer Tapped="OnCategory_Tapped" NumberOfTapsRequired="1"/>
                                 </Frame.GestureRecognizers>
                                 <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
                                     <Image Source="{Binding Poster}" WidthRequest="100" HeightRequest="100"/>
-                                    <Label Text="{Binding ItemName}" FontSize="Title" HorizontalOptions="Center" LineBreakMode="WordWrap" VerticalOptions="Fill" FontAttributes="Bold" TextColor="AliceBlue"/>
+                                    <Label Text="{Binding ItemName}" FontSize="Title" HorizontalOptions="Center" LineBreakMode="TailTruncation" VerticalOptions="Fill" FontAttributes="Bold" TextColor="AliceBlue"/>
                                     <Label Text="{Binding Status}" FontSize="Subtitle" HorizontalOptions="Center" VerticalOptions="Fill" TextColor="AliceBlue"/>
                                 </StackLayout>
                             </Frame>

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Listifyr.ItemTypes
 {
-    public class Items : IDatabaseItem//IMediaItem
+    public class Items : IDatabaseItem, INotifyPropertyChanged //IMediaItem
     {
         private string? itemname;
         private string? status;

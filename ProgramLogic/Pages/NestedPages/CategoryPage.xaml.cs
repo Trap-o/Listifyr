@@ -32,9 +32,9 @@ public partial class CategoryPage : ContentPage
 
         try
         {
-            var categoryID = await App.Database.GetIDByNameAsync<Categories>("Categories", "Name", _pageTitle);
+            var categoryID = await App.Database.GetIDByNameAsync<Categories>("CategoryID", "Categories", "Name", _pageTitle);
 
-            var items = await App.Database.LoadTableByIDAsync<Items>((int)categoryID);
+            var items = await App.Database.LoadTableByIDAsync<Items>((int)categoryID, "ID_Category");
             var collectionView = this.FindByName<CollectionView>("ItemsCollectionView");
             collectionView.ItemsSource = items;
 
@@ -45,7 +45,7 @@ public partial class CategoryPage : ContentPage
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", $"Failed to load catalogues: {ex.Message}", "OK");
+            await DisplayAlert("Error", $"Failed to load categories: {ex.Message}", "OK");
         }
 
         base.OnAppearing();
@@ -95,5 +95,23 @@ public partial class CategoryPage : ContentPage
     {
         string data = Title;
         await Navigation.PushAsync(new SearchPage(data));
+    }
+
+    private async void OnCategory_Tapped(object sender, TappedEventArgs e)
+    {
+        var frame = sender as Frame;
+
+        if (frame?.BindingContext is Items selectedItem)
+        {
+            try
+            {
+                //await DisplayAlert("ID", $"ItemID: {data}", "OK");
+                await Navigation.PushAsync(new CategoryItemPage(selectedItem));
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Error description: {ex}", "OK");
+            }
+        }
     }
 }

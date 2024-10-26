@@ -14,9 +14,9 @@ public partial class SelectedSearchItem : ContentPage
         InitializeComponent();
         Items = Item;
         categoryID = categoryId;
-        MovieTitleLabel.Text = Item.ItemName;
-        ReleaseDateLabel.Text = "Release date: " + Item.Release_Date;
-        OverviewLabel.Text = Item.Description;
+        MovieTitle.Text = Item.ItemName;
+        ReleaseDate.Text = "Release date: " + Item.Release_Date;
+        Overview.Text = Item.Description;
         if (!string.IsNullOrEmpty(Item.Poster))
         {
             MoviePoster.Source = new UriImageSource { Uri = new Uri("https://image.tmdb.org/t/p/w500" + Item.Poster) };

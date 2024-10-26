@@ -96,6 +96,9 @@
 	  <MauiXaml Update="ProgramLogic\Pages\MainPages\OthersPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="ProgramLogic\Pages\NestedPages\CategoryItemPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="ProgramLogic\Pages\NestedPages\CategoryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Listifyr.ProgramLogic.Pages.NestedPages.CategoryItemPage"
+             Title="">
+    
+    <ScrollView>
+        <StackLayout Padding="10" BackgroundColor="#0F0606" >
+            <Image x:Name="MoviePoster" Source="{Binding Poster}" HeightRequest="350"/>
+            <Label x:Name="MovieTitle" Text="{Binding ItemName}"
+               FontSize="50"
+               FontAttributes="Bold"
+               TextColor="AliceBlue"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               LineBreakMode="CharacterWrap"/>
+            <Frame BorderColor="Transparent" BackgroundColor="Transparent" HasShadow="False" HorizontalOptions="Center" Margin="-20">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnStatus_Tapped" NumberOfTapsRequired="1"/>
+                </Frame.GestureRecognizers>
+                <FlexLayout Direction="Row" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label FlexLayout.Grow="0" Text="{Binding Status}" x:Name="Status" FontSize="20" TextColor="AliceBlue" VerticalOptions="Center" HorizontalTextAlignment="Center" HorizontalOptions="Center" Margin="0, 0, 1, 0" FontAttributes="Bold"/>
+                    <Image FlexLayout.Grow="0" Source="edit.png" HeightRequest="23" VerticalOptions="Center" HorizontalOptions="Center" Margin="1, 0, 0, 0"/>
+                </FlexLayout>
+            </Frame>
+            <Label x:Name="ReleaseDate" Text="{Binding Release_Date}" FontSize="20" TextColor="AliceBlue" Margin="30, 20, 0, 20" />
+            <Label x:Name="Overview" Text="{Binding Description}" FontSize="18" TextColor="AliceBlue" FontAttributes="Italic" Margin="30, 0, 30, 0" HorizontalOptions="Fill" LineBreakMode="WordWrap"/>
+            
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

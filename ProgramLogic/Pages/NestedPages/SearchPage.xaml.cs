@@ -29,7 +29,7 @@ public partial class SearchPage : ContentPage
 
     private async void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
-        categoryId = await App.Database.GetIDByNameAsync<Categories>("Categories", "Name", searchEngine);
+        categoryId = await App.Database.GetIDByNameAsync<Categories>("CategoryID", "Categories", "Name", searchEngine);
         var selectedItem = e.SelectedItem as ItemTypes.Items;
         if (selectedItem != null)
         {
