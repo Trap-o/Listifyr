@@ -16,7 +16,7 @@ public partial class SearchPage : ContentPage
     }
     private async void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
-        if (e.NewTextValue.Length >= 3)
+        if (e.NewTextValue.Length >= 2)
         {
             if (searchEngine == "Movies")
             {

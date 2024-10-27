@@ -56,7 +56,6 @@ public partial class CategoryPage : ContentPage
         var items = await App.Database.GetAsync<Items>();
         MediaItems = new ObservableCollection<Items>(items);
     }
-    //
 
     private string ChangeLabelText()
     {
@@ -105,7 +104,6 @@ public partial class CategoryPage : ContentPage
         {
             try
             {
-                //await DisplayAlert("ID", $"ItemID: {data}", "OK");
                 await Navigation.PushAsync(new CategoryItemPage(selectedItem));
             }
             catch (Exception ex)
