@@ -6,13 +6,15 @@
     
     <ScrollView>
         <StackLayout Padding="10" BackgroundColor="#0F0606" >
-            <Image x:Name="MoviePoster" Source="{Binding Poster}" HeightRequest="350"/>
-            <Label x:Name="MovieTitle" Text="{Binding ItemName}"
+            <Image x:Name="ItemPoster" Source="{Binding Poster}" HeightRequest="350"/>
+            <Label x:Name="ItemTitle" Text="{Binding ItemName}"
                FontSize="50"
                FontAttributes="Bold"
                TextColor="AliceBlue"
                VerticalOptions="Center"
                HorizontalOptions="Center"
+               VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Center"
                LineBreakMode="CharacterWrap"/>
             <Frame BorderColor="Transparent" BackgroundColor="Transparent" HasShadow="False" HorizontalOptions="Center" Margin="-20">
                 <Frame.GestureRecognizers>

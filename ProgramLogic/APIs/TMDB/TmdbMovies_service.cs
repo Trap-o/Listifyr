@@ -1,9 +1,9 @@
 ﻿using Listifyr.ItemTypes;
 using Newtonsoft.Json;
 
-namespace Listifyr.ProgramLogic.APIs
+namespace Listifyr.ProgramLogic.APIs.TMDB
 {
-    public class TMDB_service
+    public class TmdbMovies_service
     {
         private const string apiKey = "7ad7bd4b8453c43887a81bb992f2a1fc";
         private const string apiUrl = "https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&include_adult=true&language=en-US&page=1&query=";
@@ -27,12 +27,12 @@ namespace Listifyr.ProgramLogic.APIs
             }
         }
 
-        public class MovieResponse
+        private class MovieResponse
         {
             public List<Movie> results { get; set; }
         }
 
-        public class Movie
+        private class Movie
         {
             [JsonProperty("title")]
             public string Title { get; set; }

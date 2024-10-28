@@ -6,16 +6,17 @@
     
     <ScrollView>
         <StackLayout Padding="10" BackgroundColor="#0F0606" >
-            <Image x:Name="MoviePoster" HeightRequest="350" Margin="20"/>
-            <Label x:Name="MovieTitle"
-                   FontSize="35"
-                   FontAttributes="Bold"
-                   TextColor="AliceBlue"
-                   VerticalOptions="Center"
-                   HorizontalOptions="Center"
-                   Margin="0, 0, 0, 20" 
-                   LineBreakMode="CharacterWrap"/>
-            <Label x:Name="ReleaseDate" FontSize="20" TextColor="AliceBlue" Margin="0, 20, 0, 20" />
+            <Image x:Name="ItemPoster" HeightRequest="350"/>
+            <Label x:Name="ItemTitle"
+                FontSize="50"
+                FontAttributes="Bold"
+                TextColor="AliceBlue"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                VerticalTextAlignment="Center"
+                HorizontalTextAlignment="Center"
+                LineBreakMode="CharacterWrap"/>
+            <Label x:Name="ReleaseDate" FontSize="20" TextColor="AliceBlue" Margin="30, 20, 0, 20"/>
             <Label x:Name="Overview" FontSize="18" TextColor="AliceBlue" FontAttributes="Italic" Margin="30, 0, 30, 0" HorizontalOptions="Fill" LineBreakMode="WordWrap"/>
             <Button x:Name="AddButton" Text="Select" Margin="30, 20, 30, 20" TextColor="AliceBlue" BackgroundColor="#1F1D1D" Clicked="AddButton_Clicked"/>
         </StackLayout>
