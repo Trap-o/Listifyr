@@ -16,7 +16,7 @@ namespace Listifyr.ProgramLogic.APIs.TMDB
                 var response = await client.GetStringAsync(url);
                 var seriesResponse = JsonConvert.DeserializeObject<SeriesResponse>(response);
 
-                var mediaItems = seriesResponse.results.Select(series => new Items
+                var mediaItems = seriesResponse.Results.Select(series => new Items
                 {
                     ItemName = series.Name,
                     Description = series.Overview,
@@ -30,22 +30,22 @@ namespace Listifyr.ProgramLogic.APIs.TMDB
 
         private class SeriesResponse
         {
-            public List<Series> results { get; set; }
+            public List<Series>? Results { get; set; }
         }
 
         private class Series
         {
             [JsonProperty("name")]
-            public string Name { get; set; }
+            public string? Name { get; set; }
 
             [JsonProperty("overview")]
-            public string Overview { get; set; }
+            public string? Overview { get; set; }
 
             [JsonProperty("poster_path")]
-            public string PosterPath { get; set; }
+            public string? PosterPath { get; set; }
 
             [JsonProperty("first_air_date")]
-            public string FirstAirDate { get; set; }
+            public string? FirstAirDate { get; set; }
         }
     }
 }

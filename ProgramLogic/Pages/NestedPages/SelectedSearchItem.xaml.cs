@@ -19,17 +19,14 @@ public partial class SelectedSearchItem : ContentPage
         ItemTitle.Text = Item.ItemName;
         ReleaseDate.Text = "Release date: " + Item.Release_Date;
         Overview.Text = WebUtility.HtmlDecode(Regex.Replace(Item.Description, "<.*?>", string.Empty));
+        Console.WriteLine("Poster: " + Item.Poster);
         if (!string.IsNullOrEmpty(Item.Poster))
         {
-            if (categoryId == 1 || categoryId == 2)
+            if (categoryId is 1 or 2)
                 ItemPoster.Source = new UriImageSource { Uri = new Uri("https://image.tmdb.org/t/p/w500" + Item.Poster) };
-            else if (categoryId == 4)
-                ;
-            else if (categoryId == 5)
-                ;
-            else if (categoryId == 7)
-                ;
-            else if (categoryId == 3 || categoryId == 6 || categoryId == 8)
+            //else if (categoryId == 7)
+            //    ;
+            else if (categoryId is 3 or 4 or 5 or 6 or 7 or 8)
                 ItemPoster.Source = new UriImageSource { Uri = new Uri(Item.Poster) };
         }
         else

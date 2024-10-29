@@ -1,4 +1,7 @@
+using Listifyr.ProgramLogic.APIs;
 using Listifyr.ProgramLogic.APIs.AniList;
+using Listifyr.ProgramLogic.APIs.ComicVine;
+using Listifyr.ProgramLogic.APIs.GoogleBooks;
 using Listifyr.ProgramLogic.APIs.TMDB;
 
 namespace Listifyr.ProgramLogic.Pages.NestedPages;
@@ -43,11 +46,19 @@ public partial class SearchPage : ContentPage
             }
             else if (searchEngine == "Comics")
             {
-
+                ItemsListView.ItemsSource = null;
+                ComicVine_service comicVine_service = new ComicVine_service();
+                var comics = await comicVine_service.SearchComicsAsync(e.NewTextValue);
+                Console.WriteLine($"Found comics: {comics?.Count()}");
+                ItemsListView.ItemsSource = comics;
             }
             else if (searchEngine == "Books")
             {
-
+                ItemsListView.ItemsSource = null;
+                GoogleBooks_service googleBooks_service = new GoogleBooks_service();
+                var books = await googleBooks_service.SearchBooksAsync(e.NewTextValue);
+                Console.WriteLine($"Found books: {books?.Count()}");
+                ItemsListView.ItemsSource = books;
             }
             else if (searchEngine == "Ranobe")
             {
@@ -59,7 +70,11 @@ public partial class SearchPage : ContentPage
             }
             else if (searchEngine == "Games")
             {
-
+                ItemsListView.ItemsSource = null;
+                RAWG_service rawg_service = new RAWG_service();
+                var games = await rawg_service.SearchGamesAsync(e.NewTextValue);
+                Console.WriteLine($"Found games: {games?.Count()}");
+                ItemsListView.ItemsSource = games;
             }
             else if (searchEngine == "Anime")
             {
