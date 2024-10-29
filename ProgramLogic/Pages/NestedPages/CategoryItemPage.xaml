@@ -25,7 +25,11 @@
                     <Image FlexLayout.Grow="0" Source="edit.png" HeightRequest="23" VerticalOptions="Center" HorizontalOptions="Center" Margin="1, 0, 0, 0"/>
                 </FlexLayout>
             </Frame>
-            <Label x:Name="ReleaseDate" Text="{Binding Release_Date}" FontSize="20" TextColor="AliceBlue" Margin="30, 20, 0, 20" />
+            <FlexLayout Direction="Row" Margin="30, 20, 0, 20">
+                <Label Text="Release date: " FontSize="20" TextColor="AliceBlue" />
+                <Label x:Name="ReleaseDate" Text="{Binding Release_Date}" FontSize="20" TextColor="AliceBlue" />
+            </FlexLayout>
+           
             <Label x:Name="Overview" Text="{Binding Description}" FontSize="18" TextColor="AliceBlue" FontAttributes="Italic" Margin="30, 0, 30, 0" HorizontalOptions="Fill" LineBreakMode="WordWrap"/>
             
         </StackLayout>
