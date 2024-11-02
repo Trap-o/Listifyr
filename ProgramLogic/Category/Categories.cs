@@ -1,7 +1,6 @@
 ﻿using Listifyr.ProgramLogic.databases;
 using SQLite;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace Listifyr
 {
@@ -11,34 +10,32 @@ namespace Listifyr
         private string? imagePath;
 
         [PrimaryKey, AutoIncrement]
-        //[Display(AutoGenerateField = false)]
         public int CategoryID { get; set; }
         public int Id => CategoryID;
 
         public string? Name
         {
-            get { return this.name; }
+            get { return name; }
             set
             {
-                this.name = value;
+                name = value;
                 RaisePropertyChanged("Name");
             }
         }
 
-        //[Display(AutoGenerateField = false)]
         public string? ImagePath
         {
-            get { return this.imagePath; }
+            get { return imagePath; }
             set
             {
-                this.imagePath = value;
-                this.RaisePropertyChanged("Image");
+                imagePath = value;
+                RaisePropertyChanged("Image");
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-        private void RaisePropertyChanged(String value)
+        private void RaisePropertyChanged(string value)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(value));
         }

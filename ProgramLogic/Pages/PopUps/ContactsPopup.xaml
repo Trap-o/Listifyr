@@ -4,26 +4,28 @@
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                x:Class="Listifyr.ProgramLogic.Pages.PopUps.ContactsPopup">
 
-    <VerticalStackLayout BackgroundColor="#1F1D1D" HorizontalOptions="Center">
+    <VerticalStackLayout BackgroundColor="#1F1D1D" Padding="30" Spacing="20" HorizontalOptions="Center">
         <Label
-            HorizontalTextAlignment="Start"
+            HorizontalTextAlignment="Center"
             LineBreakMode="WordWrap"
-            FontSize="22"
+            FontSize="30"
+            FontAttributes="Bold"
             TextColor="AliceBlue"
-            Margin="10"
-            Padding="20"
-            Text="Developer's contacts:"/>
-        <Label HorizontalOptions="Center"
-            Margin="0,10,0,10"
+
+            Text="Developer's contacts"/>
+
+        <Label
+            HorizontalOptions="Center"
+
             LineBreakMode="WordWrap"
             HorizontalTextAlignment="Center"
             FontSize="20"
             TextColor="AliceBlue"
-            Text="Email:&#10;yatsiks69@gmail.com&#10;Telegram: @Trap_o"/>
+            Text="Email:&#10;yatsiks69@gmail.com&#10;&#10;Telegram:&#10;@Trap_o"/>
+
         <Button
             Text="OK"
             BackgroundColor="#EE6352"
-            Margin="0,20,0,10"
             HorizontalOptions="Center"
             Padding="70,0"
             CornerRadius="20"
@@ -32,5 +34,4 @@
             TextColor="AliceBlue"
             Clicked="OnOKButtonClicked" />
     </VerticalStackLayout>
-    
 </toolkit:Popup>

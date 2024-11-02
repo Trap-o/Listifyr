@@ -6,33 +6,31 @@ namespace Listifyr.ProgramLogic.APIs.GoogleBooks
 {
     public class GoogleBooks_service
     {
-        private const string noImageIcon = "https://st3.depositphotos.com/1322515/35964/v/450/depositphotos_359648638-stock-illustration-image-available-icon.jpg";
         private const string apiUrl = "https://www.googleapis.com/books/v1/volumes/?key=" + Data.GoogleBooks_apiKey + "&q=intitle:";
 
-        public async Task<List<Items>> SearchBooksAsync(string query)
+        public static async Task<List<Items>> SearchBooksAsync(string query)
         {
-            using (HttpClient client = new HttpClient())
+            using HttpClient client = new();
+            string url = apiUrl + query;
+            var response = await client.GetStringAsync(url);
+            var booksResponse = JsonConvert.DeserializeObject<BooksResponse>(response);
+
+            var mediaItems = booksResponse?.Items?.Select(books =>
             {
-                string url = apiUrl + query;
-                var response = await client.GetStringAsync(url);
-                var booksResponse = JsonConvert.DeserializeObject<BooksResponse>(response);
+                var imageUrl = books.VolumeInfo?.ImageLinks?.Medium ??
+                               books.VolumeInfo?.ImageLinks?.Thumbnail ??
+                               books.VolumeInfo?.ImageLinks?.SmallThumbnail ??
+                               Data.noImageIcon;
+                return new Items
+                {
+                    ItemName = books.VolumeInfo?.Title ?? "N/A",
+                    Description = books.VolumeInfo?.Description + "\n\nPowered by Google Books API" ?? "No data in DB",
+                    Poster = imageUrl?.Replace("http://", "https://"),
+                    Release_Date = books.VolumeInfo?.PublishedDate ?? "No data in DB"
+                };
+            }).ToList();
 
-                var mediaItems = booksResponse?.Items?.Select(books => {
-                    var imageUrl = books.VolumeInfo?.ImageLinks?.Medium ??
-                                    books.VolumeInfo?.ImageLinks?.Thumbnail ??
-                                    books.VolumeInfo?.ImageLinks?.SmallThumbnail ??
-                                    noImageIcon;
-                    return new Items
-                    {
-                        ItemName = books.VolumeInfo?.Title ?? "No data in DB",
-                        Description = books.VolumeInfo?.Description ?? "No data in DB",
-                        Poster = imageUrl?.Replace("http://", "https://") ?? "No data in DB",
-                        Release_Date = books.VolumeInfo?.PublishedDate ?? "No data in DB"
-                    };
-                }).ToList();
-
-                return mediaItems;
-            }
+            return mediaItems;
         }
 
         private class BooksResponse

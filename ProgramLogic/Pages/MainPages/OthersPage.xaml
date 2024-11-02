@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Listifyr.View.OthersPage"
              Title="Menu">
-    
+
     <VerticalStackLayout BackgroundColor="#0F0606" HorizontalOptions="Fill" Padding="30,0" Spacing="20" VerticalOptions="FillAndExpand">
         <Button
             x:Name="projectPageButton"
@@ -14,6 +14,7 @@
             TextColor="AliceBlue"
             Margin="0,20,0,0"
             Clicked="ProjectPage_Clicked"/>
+        
         <Button
             x:Name="instructionPageButton"
             Text="Instruction"
@@ -21,16 +22,24 @@
             FontSize="30"
             FontAttributes="Bold"
             TextColor="AliceBlue"
-
             Clicked="InstructionPage_Clicked"/>
+        
         <Button
             x:Name="helpButton"
-            Text="Help"
+            Text="Contacts"
             BackgroundColor="#1F1D1D"
             FontSize="30"
             FontAttributes="Bold"
             TextColor="AliceBlue"
-
             Clicked="HelpButton_Clicked"/>
+
+        <Button
+            x:Name="creditsButton"
+            Text="Credits"
+            BackgroundColor="#1F1D1D"
+            FontSize="30"
+            FontAttributes="Bold"
+            TextColor="AliceBlue"
+            Clicked="CreditsButton_Clicked"/>
     </VerticalStackLayout>
 </ContentPage>

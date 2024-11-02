@@ -1,25 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Listifyr.ProgramLogic.databases.SQLiteDatabase;
 
 namespace Listifyr
 {
-    public class CategoriesViewModel : INotifyPropertyChanged
+    public partial class CategoriesViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<Categories> categories;
-        private Categories category;
+        private ObservableCollection<Categories>? categories;
+        private Categories? category;
 
         public Categories SelectedCategory
         {
-            get
-            {
-                return category;
-            }
+            get => category;
             set
             {
                 category = value;
@@ -29,10 +20,7 @@ namespace Listifyr
 
         public ObservableCollection<Categories> Categories
         {
-            get
-            {
-                return categories;
-            }
+            get => categories;
             set
             {
                 categories = value;
@@ -40,9 +28,7 @@ namespace Listifyr
             }
         }
 
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public void OnPropertyChanged(string name)
         {

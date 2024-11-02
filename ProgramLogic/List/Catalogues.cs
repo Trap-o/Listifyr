@@ -9,16 +9,15 @@ namespace Listifyr
         private string? name;
 
         [PrimaryKey, AutoIncrement]
-        //[Display(AutoGenerateField = false)]
         public int CatalogueID { get; set; }
         public int Id => CatalogueID;
 
         public string? Name
         {
-            get { return this.name; }
+            get { return name; }
             set
             {
-                this.name = value;
+                name = value;
                 RaisePropertyChanged("Name");
             }
         }

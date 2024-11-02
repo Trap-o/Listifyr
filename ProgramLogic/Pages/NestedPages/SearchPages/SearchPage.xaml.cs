@@ -8,7 +8,7 @@ namespace Listifyr.ProgramLogic.Pages.NestedPages;
 
 public partial class SearchPage : ContentPage
 {
-    private string searchEngine;
+    private readonly string searchEngine;
     private int? categoryId;
 
     public SearchPage() => InitializeComponent();
@@ -24,64 +24,58 @@ public partial class SearchPage : ContentPage
         {
             if (searchEngine == "Movies")
             {
+                apiLabel.Text = "Powered by The Movie Database (TMDB) API";
                 ItemsListView.ItemsSource = null;
-                TmdbMovies_service tMDB_Service = new TmdbMovies_service();
-                var movies = await tMDB_Service.SearchMoviesAsync(e.NewTextValue);
+                var movies = await TmdbMovies_service.SearchMoviesAsync(e.NewTextValue);
                 ItemsListView.ItemsSource = movies;
             }
             else if (searchEngine == "Series")
             {
+                apiLabel.Text = "Powered by The Movie Database (TMDB) API";
                 ItemsListView.ItemsSource = null;
-                TmdbSeries_service tMDB_Service = new TmdbSeries_service();
-                var series = await tMDB_Service.SearchSeriesAsync(e.NewTextValue);
+                var series = await TmdbSeries_service.SearchSeriesAsync(e.NewTextValue);
                 ItemsListView.ItemsSource = series;
             }
             else if (searchEngine == "Manga")
             {
+                apiLabel.Text = "Powered by AniList API";
                 ItemsListView.ItemsSource = null;
-                AniListManga_service aniListManga_Service = new AniListManga_service();
-                var manga = await aniListManga_Service.SearchMangaAsync(e.NewTextValue);
-                Console.WriteLine($"Found manga: {manga?.Count()}");
+                var manga = await AniListManga_service.SearchMangaAsync(e.NewTextValue);
                 ItemsListView.ItemsSource = manga;
             }
             else if (searchEngine == "Comics")
             {
+                apiLabel.Text = "Powered by Comic Vine API";
                 ItemsListView.ItemsSource = null;
-                ComicVine_service comicVine_service = new ComicVine_service();
-                var comics = await comicVine_service.SearchComicsAsync(e.NewTextValue);
-                Console.WriteLine($"Found comics: {comics?.Count()}");
+                var comics = await ComicVine_service.SearchComicsAsync(e.NewTextValue);
                 ItemsListView.ItemsSource = comics;
             }
             else if (searchEngine == "Books")
             {
+                apiLabel.Text = "Powered by Google Books API";
                 ItemsListView.ItemsSource = null;
-                GoogleBooks_service googleBooks_service = new GoogleBooks_service();
-                var books = await googleBooks_service.SearchBooksAsync(e.NewTextValue);
-                Console.WriteLine($"Found books: {books?.Count()}");
+                var books = await GoogleBooks_service.SearchBooksAsync(e.NewTextValue);
                 ItemsListView.ItemsSource = books;
             }
             else if (searchEngine == "Ranobe")
             {
+                apiLabel.Text = "Powered by AniList API";
                 ItemsListView.ItemsSource = null;
-                AniListRanobe_service aniListRanobe_Service = new AniListRanobe_service();
-                var ranobe = await aniListRanobe_Service.SearchRanobeAsync(e.NewTextValue);
-                Console.WriteLine($"Found ranobe: {ranobe?.Count()}");
+                var ranobe = await AniListRanobe_service.SearchRanobeAsync(e.NewTextValue);
                 ItemsListView.ItemsSource = ranobe;
             }
             else if (searchEngine == "Games")
             {
+                apiLabel.Text = "Powered by RAWG Video Games Database API";
                 ItemsListView.ItemsSource = null;
-                RAWG_service rawg_service = new RAWG_service();
-                var games = await rawg_service.SearchGamesAsync(e.NewTextValue);
-                Console.WriteLine($"Found games: {games?.Count()}");
+                var games = await RAWG_service.SearchGamesAsync(e.NewTextValue);
                 ItemsListView.ItemsSource = games;
             }
             else if (searchEngine == "Anime")
             {
+                apiLabel.Text = "Powered by AniList API";
                 ItemsListView.ItemsSource = null;
-                AniListAnime_service aniListAnime_Service = new AniListAnime_service();
-                var animes = await aniListAnime_Service.SearchAnimeAsync(e.NewTextValue);
-                Console.WriteLine($"Found animes: {animes?.Count()}");
+                var animes = await AniListAnime_service.SearchAnimeAsync(e.NewTextValue);
                 ItemsListView.ItemsSource = animes;
             }
         }
@@ -90,10 +84,9 @@ public partial class SearchPage : ContentPage
     private async void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
         categoryId = await App.Database.GetIDByNameAsync<Categories>("CategoryID", "Categories", "Name", searchEngine);
-        var selectedItem = e.SelectedItem as ItemTypes.Items;
-        if (selectedItem != null)
+        if (e.SelectedItem is ItemTypes.Items selectedItem)
         {
-            await Navigation.PushAsync(new SelectedSearchItem(selectedItem, categoryId));
+            await Navigation.PushAsync(new SelectedSearchItem(selectedItem, (int)categoryId));
         }
     }
 }

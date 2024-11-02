@@ -1,24 +1,16 @@
 ﻿using Listifyr.ItemTypes;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Listifyr.ProgramLogic.ListItem
 {
-    internal class ItemsViewModel : INotifyPropertyChanged
+    internal partial class ItemsViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<Items> mediaItems;
+        private ObservableCollection<Items>? mediaItems;
 
         public ObservableCollection<Items> MediaItems
         {
-            get
-            {
-                return mediaItems;
-            }
+            get => mediaItems;
             set
             {
                 mediaItems = value;
@@ -26,24 +18,11 @@ namespace Listifyr.ProgramLogic.ListItem
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
-        public void ChangeFieldForAPI(string API)
-        {
-            switch (API)
-            {
-                case "TMDB":
-                    //mediaItems;
-                    break;
-
-                default:
-                    break;
-            }
         }
     }
 }

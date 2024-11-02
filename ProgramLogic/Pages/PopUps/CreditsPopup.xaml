@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               x:Class="Listifyr.ProgramLogic.Pages.PopUps.CreditsPopup">
+
+    <VerticalStackLayout BackgroundColor="#1F1D1D" Padding="20" Spacing="10" HorizontalOptions="Center">
+        <Label
+            HorizontalTextAlignment="Center"
+            FontSize="30"
+            FontAttributes="Bold"
+            TextColor="AliceBlue"
+            Text="Credits"/>
+
+        <Label
+            HorizontalOptions="Start"
+            LineBreakMode="WordWrap"
+            HorizontalTextAlignment="Start"
+            FontSize="20"
+            TextColor="AliceBlue"
+            Text="      Project author: Trap_o, 4th year PPPC student."/>
+        
+        <Label
+            HorizontalOptions="Start"
+            LineBreakMode="CharacterWrap"
+            HorizontalTextAlignment="Start"
+            FontSize="20"
+            TextColor="AliceBlue"
+            Text="      This project is a part of the coursework for Designing of Automated Information Systems."
+            Margin="0, -10, 0, 10"/>
+
+        <Label
+             HorizontalOptions="Start"
+             LineBreakMode="WordWrap"
+             HorizontalTextAlignment="Start"
+             FontSize="20"
+             FontAttributes="Bold"
+             TextColor="AliceBlue"
+             Text="List of used APIs:"
+             Margin="0, 10"/>
+
+        <StackLayout Spacing="5">
+            <Label
+                Text="- TMDB API"
+                FontSize="20"
+                TextDecorations="Underline"
+                TextColor="#3a78ff">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenApiPage}"
+                                          CommandParameter="https://developer.themoviedb.org/docs/getting-started"/>
+                </Label.GestureRecognizers>
+            </Label>
+
+            <Label
+                Text="- RAWG API"
+                FontSize="20"
+                TextDecorations="Underline"
+                TextColor="#3a78ff">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenApiPage}"
+                                          CommandParameter="https://rawg.io/apidocs"/>
+                </Label.GestureRecognizers>
+            </Label>
+
+            <Label
+                Text="- Google Books API"
+                FontSize="20"
+                TextDecorations="Underline"
+                TextColor="#3a78ff">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenApiPage}"
+                                          CommandParameter="https://developers.google.com/books"/>
+                </Label.GestureRecognizers>
+            </Label>
+
+            <Label
+                Text="- Comic Vine API"
+                FontSize="20"
+                TextDecorations="Underline"
+                TextColor="#3a78ff">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenApiPage}"
+                                          CommandParameter="https://comicvine.gamespot.com/api/"/>
+                </Label.GestureRecognizers>
+            </Label>
+
+            <Label
+                Text="- AniList API"
+                FontSize="20"
+                TextDecorations="Underline"
+                TextColor="#3a78ff">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenApiPage}"
+                                          CommandParameter="https://docs.anilist.co/"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </StackLayout>
+
+        <Button
+            Text="OK"
+            BackgroundColor="#EE6352"
+            Margin="0,20,0,10"
+            HorizontalOptions="Center"
+            Padding="70,0"
+            CornerRadius="20"
+            FontSize="20"
+            FontAttributes="Bold"
+            TextColor="AliceBlue"
+            Clicked="OnOKButtonClicked" />
+    </VerticalStackLayout>
+</toolkit:Popup>

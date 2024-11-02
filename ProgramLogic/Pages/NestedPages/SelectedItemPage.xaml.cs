@@ -5,8 +5,8 @@ using System.Collections.ObjectModel;
 namespace Listifyr.View;
 public partial class CategoryPage : ContentPage
 {
-    private ObservableCollection<Items> mediaItems;
-    public ObservableCollection<Items> MediaItems
+    private ObservableCollection<Items>? mediaItems;
+    public ObservableCollection<Items>? MediaItems
     {
         get
         {
@@ -19,7 +19,7 @@ public partial class CategoryPage : ContentPage
         }
     }
 
-    private string? _pageTitle;
+    private readonly string? _pageTitle;
     public CategoryPage() => InitializeComponent();
     public CategoryPage(string title)
     {
@@ -28,20 +28,19 @@ public partial class CategoryPage : ContentPage
     }
     protected async override void OnAppearing()
     {
-        this.Title = _pageTitle;
+        Title = _pageTitle;
 
         try
         {
             var categoryID = await App.Database.GetIDByNameAsync<Categories>("CategoryID", "Categories", "Name", _pageTitle);
-
             var items = await App.Database.LoadTableByIDAsync<Items>((int)categoryID, "ID_Category");
             var collectionView = this.FindByName<CollectionView>("ItemsCollectionView");
             collectionView.ItemsSource = items;
 
             if (items.Count == 0)
-                this.LabelForEmptyCategory.Text = $"Add your first {ChangeLabelText()} by pressing the button!";
+                LabelForEmptyCategory.Text = $"Add your first {ChangeLabelText()} by pressing the button!";
             else
-                this.LabelForEmptyCategory.Text = "";
+                LabelForEmptyCategory.Text = "";
         }
         catch (Exception ex)
         {
@@ -49,12 +48,6 @@ public partial class CategoryPage : ContentPage
         }
 
         base.OnAppearing();
-    }
-
-    public async Task LoadItemsAsync()
-    {
-        var items = await App.Database.GetAsync<Items>();
-        MediaItems = new ObservableCollection<Items>(items);
     }
 
     private string ChangeLabelText()
@@ -65,24 +58,31 @@ public partial class CategoryPage : ContentPage
             case "Movies":
                 emptyElementName = "movie";
                 break;
+
             case "Series":
                 emptyElementName = "series";
                 break;
+
             case "Manga":
                 emptyElementName = "manga";
                 break;
+
             case "Comics":
                 emptyElementName = "comics";
                 break;
+
             case "Books":
                 emptyElementName = "book";
                 break;
+
             case "Ranobe":
                 emptyElementName = "ranobe";
                 break;
+
             case "Games":
                 emptyElementName = "game";
                 break;
+
             case "Anime":
                 emptyElementName = "anime";
                 break;

@@ -6,32 +6,44 @@
              Title="Categories">
 
     <ContentPage.BindingContext>
-        <local:CategoriesViewModel />
+        <local:CategoriesViewModel/>
     </ContentPage.BindingContext>
 
     <ScrollView>
-        <VerticalStackLayout BackgroundColor="#0F0606" Padding="30,0" Spacing="25">
+        <VerticalStackLayout BackgroundColor="#0F0606" Padding="20, 0" Spacing="25">
             <CollectionView ItemsSource="{Binding Categories}" x:Name="CategoryCollectionView">
+
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical"
-                             Span="2" />
+                    <GridItemsLayout
+                        Orientation="Vertical"
+                        Span="2" />
                 </CollectionView.ItemsLayout>
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame Padding="10" Margin="5" BorderColor="#1F1D1D" BackgroundColor="#1F1D1D" HasShadow="False">
+
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnCategoryTapped" NumberOfTapsRequired="1"/>
                             </Frame.GestureRecognizers>
+
                             <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                                <Image Source="{Binding ImagePath}" WidthRequest="100" HeightRequest="100"/>
-                                <Label Text="{Binding Name}" FontSize="Title" HorizontalOptions="Center" VerticalOptions="Fill" FontAttributes="Bold" TextColor="AliceBlue"/>
+                                <Image
+                                    Source="{Binding ImagePath}"
+                                    WidthRequest="100"
+                                    HeightRequest="100"/>
+                                <Label
+                                    Text="{Binding Name}"
+                                    FontSize="Title"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Fill"
+                                    FontAttributes="Bold"
+                                    TextColor="AliceBlue"/>
                             </StackLayout>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </VerticalStackLayout>
-
     </ScrollView>
 </ContentPage>

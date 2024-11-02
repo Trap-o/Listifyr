@@ -1,3 +1,5 @@
+using Listifyr.ProgramLogic.Pages.NestedPages.CataloguesInteractionPages;
+
 namespace Listifyr.View;
 
 public partial class ListsPage : ContentPage
@@ -5,7 +7,6 @@ public partial class ListsPage : ContentPage
     public ListsPage()
 	{
 		InitializeComponent();
-        OnAppearing();
     }
     protected async override void OnAppearing()
     {
@@ -23,12 +24,25 @@ public partial class ListsPage : ContentPage
 
     private async void OnCatalogueTapped(object sender, TappedEventArgs e)
     {
-        await DisplayAlert("Перемога", $"Натиснуто на каталог", "OK");
+        var frame = sender as Frame;
+
+        if (frame?.BindingContext is Catalogues selectedCatalogue)
+        {
+            try
+            {
+                var data = selectedCatalogue.Name;
+                await Navigation.PushAsync(new CataloguePage(data));
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Error description: {ex}", "OK");
+            }
+        }
     }
 
     private async void AddButton_Clicked(object sender, EventArgs e)
     {
-        CataloguesViewModel cataloguesViewModel = new CataloguesViewModel();
+        CataloguesViewModel cataloguesViewModel = new();
         await cataloguesViewModel.AddCatalogue();
         OnAppearing();
     }

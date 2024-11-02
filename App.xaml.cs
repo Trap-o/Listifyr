@@ -1,5 +1,4 @@
 ﻿using Listifyr.ProgramLogic.databases;
-using Listifyr.View;
 
 namespace Listifyr
 {
@@ -8,30 +7,16 @@ namespace Listifyr
         public App()
         {
             InitializeComponent();
-
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
             MainPage = new AppShell();
         }
 
-        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            Console.WriteLine($"Необроблена виняткова ситуація: {e.ExceptionObject}");
-        }
-
-        private void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
-        {
-            Console.WriteLine($"Необроблена виняткова ситуація у Task: {e.Exception}");
-        }
-
-        static SQLiteDatabase database;
+        static SQLiteDatabase? database;
 
         public static SQLiteDatabase Database
         {
             get
             {
-                if (database == null)
-                    database = new SQLiteDatabase();
+                database ??= new SQLiteDatabase();
 
                 return database;
             }

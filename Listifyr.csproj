@@ -96,13 +96,19 @@
 	  <MauiXaml Update="ProgramLogic\Pages\MainPages\OthersPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="ProgramLogic\Pages\NestedPages\CategoryItemPage.xaml">
+	  <MauiXaml Update="ProgramLogic\Pages\NestedPages\CataloguesInteractionPages\CataloguePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="ProgramLogic\Pages\NestedPages\CategoryPage.xaml">
+	  <MauiXaml Update="ProgramLogic\Pages\NestedPages\CategoriesInteractionPages\CategoryItemPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="ProgramLogic\Pages\NestedPages\SelectedItemPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="ProgramLogic\Pages\NestedPages\CreateItemPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="ProgramLogic\Pages\PopUps\CreditsPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="useless\SearchPage.xaml">
@@ -119,6 +125,9 @@
 	<ItemGroup>
 	  <Compile Update="ProgramLogic\Pages\MainPages\ListsPage.xaml.cs">
 	    <DependentUpon>ListsPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="ProgramLogic\Pages\NestedPages\SelectedItemPage.xaml.cs">
+	    <DependentUpon>SelectedItemPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 

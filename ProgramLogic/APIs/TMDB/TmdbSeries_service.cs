@@ -8,24 +8,22 @@ namespace Listifyr.ProgramLogic.APIs.TMDB
     {
         private const string apiUrl = "https://api.themoviedb.org/3/search/tv?api_key=" + Data.TMDB_apiKey + "&include_adult=true&language=en-US&page=1&query=";
 
-        public async Task<List<Items>> SearchSeriesAsync(string query)
+        public static async Task<List<Items>> SearchSeriesAsync(string query)
         {
-            using (HttpClient client = new HttpClient())
+            using HttpClient client = new();
+            string url = apiUrl + query;
+            var response = await client.GetStringAsync(url);
+            var seriesResponse = JsonConvert.DeserializeObject<SeriesResponse>(response);
+
+            var mediaItems = seriesResponse?.Results?.Select(series => new Items
             {
-                string url = apiUrl + query;
-                var response = await client.GetStringAsync(url);
-                var seriesResponse = JsonConvert.DeserializeObject<SeriesResponse>(response);
+                ItemName = series.Name ?? "N/A",
+                Description = series.Overview + "\n\nPowered by The Movie Database (TMDB) API" ?? "No data in DB",
+                Poster = "https://image.tmdb.org/t/p/w500" + series.PosterPath,
+                Release_Date = series.FirstAirDate ?? "No data in DB"
+            }).ToList();
 
-                var mediaItems = seriesResponse.Results.Select(series => new Items
-                {
-                    ItemName = series.Name,
-                    Description = series.Overview,
-                    Poster = "https://image.tmdb.org/t/p/w500" + series.PosterPath,
-                    Release_Date = series.FirstAirDate
-                }).ToList();
-
-                return mediaItems;
-            }
+            return mediaItems;
         }
 
         private class SeriesResponse

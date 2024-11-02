@@ -5,25 +5,28 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Listifyr"
     xmlns:view="clr-namespace:Listifyr.View"
+    
+    Shell.BackgroundColor="#0F0606"
+    Shell.ForegroundColor="#EE6352"
+    
     Shell.TabBarBackgroundColor="#1F1D1D"
     Shell.TabBarForegroundColor="#EE6352"
     Shell.TabBarTitleColor="#EE6352"
     Shell.TabBarUnselectedColor="AliceBlue"
-    Shell.BackgroundColor="#0F0606"
+
     Shell.FlyoutBehavior="Disabled"
-    Shell.ForegroundColor="#EE6352"
-    Shell.TitleColor="AliceBlue"
     
+    Shell.TitleColor="AliceBlue"
     Title="Listifyr">
 
     <Shell.TitleView>
-        <Grid Padding="0,0,0,0">
+        <Grid Padding="0,-3,0,0">
             <Label x:Name ="pageTitle"
                    TextColor="AliceBlue"
                    Background="#0F0606"
                    FontSize="40"
                    VerticalOptions="Start"
-                   />
+                   LineBreakMode="TailTruncation"/>
         </Grid>
     </Shell.TitleView>
 
@@ -42,6 +45,5 @@
             Title="Menu"
             Icon="ellipsis_h_icon.svg"
             ContentTemplate="{DataTemplate view:OthersPage}"/>
-
     </TabBar>
 </Shell>

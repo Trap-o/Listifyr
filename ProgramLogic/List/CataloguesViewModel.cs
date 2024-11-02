@@ -1,24 +1,15 @@
-﻿using Listifyr.ItemTypes;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Listifyr
 {
-    public class CataloguesViewModel : INotifyPropertyChanged
+    public partial class CataloguesViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<Catalogues> catalogues;
+        private ObservableCollection<Catalogues>? catalogues;
 
         public ObservableCollection<Catalogues> Catalogues
         {
-            get
-            {
-                return catalogues;
-            }
+            get => catalogues;
             set
             {
                 catalogues = value;
@@ -26,7 +17,7 @@ namespace Listifyr
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public void OnPropertyChanged(string name)
         {
@@ -41,12 +32,11 @@ namespace Listifyr
 
         public async Task AddCatalogue()
         {
-            string newCatalogueName = await Shell.Current.DisplayPromptAsync("Новий список", "Введіть назву списку");
+            string newCatalogueName = await Shell.Current.DisplayPromptAsync("New catalogue", "Enter catalogue name (max. 15 characters):", maxLength: 15);
             if (!string.IsNullOrEmpty(newCatalogueName))
             {
                 var addedCatalogue = new Catalogues { Name = (newCatalogueName).TrimEnd() };
                 await App.Database.AddItemAsync<Catalogues>(addedCatalogue);
-                
             }
             await LoadCataloguesAsync();
         }

@@ -8,24 +8,24 @@ namespace Listifyr.ProgramLogic.APIs.ComicVine
     {
         private const string apiUrl = "https://comicvine.gamespot.com/api/search/?api_key=" + Data.ComicVine_apiKey + "&format=json&resources=issue&query=";
 
-        public async Task<List<Items>> SearchComicsAsync(string query)
+        public static async Task<List<Items>> SearchComicsAsync(string query)
         {
-            using (HttpClient client = new HttpClient())
+            using HttpClient client = new();
+            string url = apiUrl + query;
+            var response = await client.GetStringAsync(url);
+            var comicsResponse = JsonConvert.DeserializeObject<ComicsResponse>(response);
+
+            var mediaItems = comicsResponse?.Results?.Select(comics => new Items
             {
-                string url = apiUrl + query;
-                var response = await client.GetStringAsync(url);
-                var comicsResponse = JsonConvert.DeserializeObject<ComicsResponse>(response);
+                ItemName = comics.Name ?? (comics?.Volume?.Name + " " + comics?.IssueNumber) ?? "N/A",
+                Description = comics?.Description + "\n\nPowered by Comic Vine API" ??
+                              comics?.Deck + "\n\nPowered by Comic Vine APII" ??
+                              "No data in DB",
+                Poster = comics?.Image?.OriginalUrl ?? Data.noImageIcon,
+                Release_Date = comics?.CoverDate ?? "No data in DB"
+            }).ToList();
 
-                var mediaItems = comicsResponse?.Results?.Select(comics => new Items
-                {
-                    ItemName = comics.Name ?? (comics.Volume.Name + " " + comics.IssueNumber) ?? "No data in DB",
-                    Description = comics.Description ?? comics.Deck ?? "No data in DB",
-                    Poster = comics.Image?.OriginalUrl ?? "No data in DB",
-                    Release_Date = comics.CoverDate ?? "No data in DB"
-                }).ToList();
-
-                return mediaItems;
-            }
+            return mediaItems;
         }
 
         private class ComicsResponse
@@ -51,7 +51,7 @@ namespace Listifyr.ProgramLogic.APIs.ComicVine
             public string? CoverDate { get; set; }
 
             [JsonProperty("volume")]
-            public ComicVolume Volume { get; set; }
+            public ComicVolume? Volume { get; set; }
 
             [JsonProperty("image")]
             public ComicImage? Image { get; set; }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Listifyr.ProgramLogic.Pages.NestedPages.CataloguesInteractionPages.CataloguePage"
+             xmlns:local="clr-namespace:Listifyr"
+             Title="">
+
+    <ScrollView>
+        <Grid>
+            <VerticalStackLayout BackgroundColor="#0F0606" Padding="30,0" Spacing="25">
+                <CollectionView ItemsSource="{Binding Items}" x:Name="ItemsCollectionView">
+
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout
+                            Orientation="Vertical"
+                            Span="2" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Padding="10" Margin="5" BorderColor="#1F1D1D" BackgroundColor="#1F1D1D" HasShadow="False">
+
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnCatalogue_Tapped" NumberOfTapsRequired="1"/>
+                                </Frame.GestureRecognizers>
+
+                                <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Image
+                                        Source="{Binding Poster}"
+                                        WidthRequest="100"
+                                        HeightRequest="100"/>
+
+                                    <Label
+                                        Text="{Binding ItemName}"
+                                        FontSize="Title"
+                                        HorizontalOptions="Center"
+                                        LineBreakMode="TailTruncation"
+                                        VerticalOptions="Fill"
+                                        FontAttributes="Bold"
+                                        TextColor="AliceBlue"/>
+
+                                    <Label
+                                        Text="{Binding Status}"
+                                        FontSize="Subtitle"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Fill"
+                                        TextColor="AliceBlue"/>
+                                </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+
+            <Label x:Name="LabelForEmptyCatalogue"
+                   Text=""
+                   TextColor="AliceBlue"
+                   FontSize="35"
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center"
+                   IsVisible="True"
+                   Padding="20,0"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

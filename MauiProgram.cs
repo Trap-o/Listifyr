@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Maui;
-//using Listifyr.ProgramLogic.Pages.NestedPages;
 using Microsoft.Extensions.Logging;
 
 namespace Listifyr
@@ -16,7 +15,6 @@ namespace Listifyr
                 {
                     handlers.AddHandler<Microsoft.Maui.Controls.Toolbar, Microsoft.Maui.Handlers.ToolbarHandler>();
                     
-                    // Додаємо кастомну логіку для ToolbarHandler
                     Microsoft.Maui.Handlers.ToolbarHandler.Mapper.AppendToMapping("CustomNavigationView", (handler, view) =>
                     {
 #if ANDROID
@@ -31,7 +29,6 @@ namespace Listifyr
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            //Routing.RegisterRoute("categoryPage", typeof(CategoryPage));
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif

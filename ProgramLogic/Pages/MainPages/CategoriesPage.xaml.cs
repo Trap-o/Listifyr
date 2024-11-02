@@ -5,7 +5,6 @@ public partial class CategoriesPage : ContentPage
     public CategoriesPage()
     {
         InitializeComponent();
-        OnAppearing();
     }
 
     protected async override void OnAppearing()
@@ -31,7 +30,7 @@ public partial class CategoriesPage : ContentPage
         {
             try
             {
-                string data = selectedCategory.Name;
+                var data = selectedCategory.Name;
                 await Navigation.PushAsync(new CategoryPage(data));
             }
             catch (Exception ex)

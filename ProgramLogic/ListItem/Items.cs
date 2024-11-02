@@ -1,101 +1,87 @@
 ﻿using Listifyr.ProgramLogic.databases;
 using SQLite;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Listifyr.ItemTypes
 {
-    public class Items : IDatabaseItem, INotifyPropertyChanged //IMediaItem
+    public partial class Items : IDatabaseItem, INotifyPropertyChanged
     {
         private string? itemname;
         private string? status;
-        private double? rate;
         private string? description;
-        private string? type;
         private string? poster;
         private string? release_date;
+        public int? id_catalogue;
         public int ID_Category { get; set; }
-        public int? ID_Catalogue { get; set; }
 
         [PrimaryKey, AutoIncrement]
-        //[Display(AutoGenerateField = false)]
         public int ItemID { get; set; }
         public int Id => ItemID;
 
         public string? ItemName
         {
-            get { return this.itemname; }
+            get { return itemname; }
             set
             {
-                this.itemname = value;
+                itemname = value;
                 RaisePropertyChanged("ItemName");
             }
         }
         public string? Status
         {
-            get { return this.status; }
+            get { return status; }
             set
             {
-                this.status = value;
+                status = value;
                 RaisePropertyChanged("Status");
             }
         }
-        public double? Rate
-        {
-            get { return this.rate; }
-            set
-            {
-                this.rate = value;
-                RaisePropertyChanged("Rate");
-            }
-        }
+
         public string? Description
         {
-            get { return this.description; }
+            get { return description; }
             set
             {
-                this.description = value;
+                description = value;
                 RaisePropertyChanged("Description");
             }
         }
-        public string? Type
-        {
-            get { return this.type; }
-            set
-            {
-                this.type = value;
-                RaisePropertyChanged("Type");
-            }
-        }
+
         public string? Poster
         {
-            get { return this.poster; }
+            get { return poster; }
             set
             {
-                this.poster = value;
+                poster = value;
                 RaisePropertyChanged("Poster");
             }
         }
         public string? Release_Date
         {
-            get { return this.release_date; }
+            get { return release_date; }
             set
             {
-                this.release_date = value;
+                release_date = value;
                 RaisePropertyChanged("Release_Date");
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public int? ID_Catalogue
+        {
+            get { return id_catalogue; }
+            set
+            {
+                id_catalogue = value;
+                RaisePropertyChanged("ID_Catalogue");
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private void RaisePropertyChanged(string value)
         {
             if (PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(value));
+                PropertyChanged(this, new PropertyChangedEventArgs(value));
         }
 
     }

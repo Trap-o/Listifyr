@@ -1,48 +1,47 @@
 ﻿using Listifyr.ItemTypes;
-using Newtonsoft.Json;
 using Listifyr.ProgramLogic.PrivateData;
+using Newtonsoft.Json;
 
 namespace Listifyr.ProgramLogic.APIs
 {
     public class RAWG_service
     {
-        private const string noImageIcon = "https://st3.depositphotos.com/1322515/35964/v/450/depositphotos_359648638-stock-illustration-image-available-icon.jpg";
         private const string apiUrlSearchGameID = "https://api.rawg.io/api/games?key=" + Data.RAWG_apiKey + "&page_size=20&search=";
 
-        public async Task<List<Items>> SearchGamesAsync(string query)
+        public static async Task<List<Items>> SearchGamesAsync(string query)
         {
-            using (HttpClient client = new HttpClient())
+            using HttpClient client = new();
+            string url = apiUrlSearchGameID + query;
+            var response = await client.GetStringAsync(url);
+            var gamesResponse = JsonConvert.DeserializeObject<GamesResponse>(response);
+
+            var mediaItems = new List<Items>();
+
+            foreach (var game in gamesResponse?.Results)
             {
-                string url = apiUrlSearchGameID + query;
-                var response = await client.GetStringAsync(url);
-                var gamesResponse = JsonConvert.DeserializeObject<GamesResponse>(response);
+                var detailsResponse = await client.GetStringAsync($"https://api.rawg.io/api/games/{game.Id}?key={Data.RAWG_apiKey}");
+                var gameDetailsResponse = JsonConvert.DeserializeObject<GameDetailResponse>(detailsResponse);
 
-                var mediaItems = new List<Items>();
-
-                foreach (var game in gamesResponse.Results)
+                var mediaItem = new Items
                 {
-                    var detailsResponse = await client.GetStringAsync($"https://api.rawg.io/api/games/{game.Id}?key={Data.RAWG_apiKey}");
-                    var gameDetailsResponse = JsonConvert.DeserializeObject<GameDetailResponse>(detailsResponse);
-
-                    var mediaItem = new Items
-                    {
-                        ItemName = gameDetailsResponse?.Name ?? "No data in DB",
-                        Description = gameDetailsResponse?.Description ?? gameDetailsResponse?.RedditDescription ?? "No data in DB",
-                        Poster = gameDetailsResponse?.BackgroundImage ?? gameDetailsResponse?.BackgroundImageAdditional ?? "No data in DB",
-                        Release_Date = gameDetailsResponse?.Released ?? "No data in DB"
-                    };
-                    mediaItems.Add(mediaItem);
-                }
-                return mediaItems;
+                    ItemName = gameDetailsResponse?.Name ?? "N/A",
+                    Description = gameDetailsResponse?.Description + "\n\nPowered by RAWG Video Games Database API" ??
+                                  gameDetailsResponse?.RedditDescription + "\n\nPowered by RAWG Video Games Database API" ??
+                                  "No data in DB",
+                    Poster = gameDetailsResponse?.BackgroundImage ?? gameDetailsResponse?.BackgroundImageAdditional ?? Data.noImageIcon,
+                    Release_Date = gameDetailsResponse?.Released ?? "No data in DB"
+                };
+                mediaItems.Add(mediaItem);
             }
+            return mediaItems;
         }
 
-        public class GamesResponse
+        private class GamesResponse
         {
             public List<Games>? Results { get; set; }
         }
 
-        public class GameDetailResponse
+        private class GameDetailResponse
         {
             [JsonProperty("name")]
             public string? Name { get; set; }
@@ -63,7 +62,7 @@ namespace Listifyr.ProgramLogic.APIs
             public string? Released { get; set; }
         }
 
-        public class Games
+        private class Games
         {
             [JsonProperty("id")]
             public int Id { get; set; }

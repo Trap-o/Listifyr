@@ -43,4 +43,9 @@ public partial class OthersPage : ContentPage
     {
         this.ShowPopup(new ContactsPopup());
     }
+
+    private void CreditsButton_Clicked(object sender, EventArgs e)
+    {
+        this.ShowPopup(new CreditsPopup());
+    }
 }
