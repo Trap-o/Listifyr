@@ -1,8 +1,4 @@
 using Listifyr.ItemTypes;
-using Listifyr.ProgramLogic.PrivateData;
-using SQLite;
-using System.Net;
-using System.Text.RegularExpressions;
 
 namespace Listifyr.ProgramLogic.Pages.NestedPages;
 

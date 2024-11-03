@@ -49,7 +49,7 @@ namespace Listifyr.ProgramLogic.APIs.AniList
             var mediaItems = ranobeResponse.Data.Page.Media.Select(ranobe => new Items
             {
                 ItemName = ranobe.Title?.English ?? ranobe.Title?.Romaji ?? ranobe.Title?.Native ?? "N/A",
-                Description = ranobe.Description + "\n\nPowered by AniList API" ?? "No data in DB",
+                Description = (ranobe.Description ?? "No data in DB") + "\n\nPowered by AniList API",
                 Poster = ranobe.CoverImage?.Large ?? Data.noImageIcon,
                 Release_Date = $"{ranobe.StartDate?.Year}-{ranobe.StartDate?.Month:D2}-{ranobe.StartDate?.Day:D2}" ?? "No data in DB"
             }).ToList();

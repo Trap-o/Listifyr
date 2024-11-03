@@ -30,8 +30,8 @@ public partial class ListsPage : ContentPage
         {
             try
             {
-                var data = selectedCatalogue.Name;
-                await Navigation.PushAsync(new CataloguePage(data));
+                //var data = selectedCatalogue.Name;
+                await Navigation.PushAsync(new CataloguePage(selectedCatalogue));
             }
             catch (Exception ex)
             {

@@ -25,9 +25,8 @@ namespace Listifyr.ProgramLogic.APIs
                 var mediaItem = new Items
                 {
                     ItemName = gameDetailsResponse?.Name ?? "N/A",
-                    Description = gameDetailsResponse?.Description + "\n\nPowered by RAWG Video Games Database API" ??
-                                  gameDetailsResponse?.RedditDescription + "\n\nPowered by RAWG Video Games Database API" ??
-                                  "No data in DB",
+                    Description = (gameDetailsResponse?.Description ?? gameDetailsResponse?.RedditDescription ?? "No data in DB") +
+                                  "\n\nPowered by RAWG Video Games Database API",
                     Poster = gameDetailsResponse?.BackgroundImage ?? gameDetailsResponse?.BackgroundImageAdditional ?? Data.noImageIcon,
                     Release_Date = gameDetailsResponse?.Released ?? "No data in DB"
                 };

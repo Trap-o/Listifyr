@@ -49,7 +49,7 @@ namespace Listifyr.ProgramLogic.APIs.AniList
             var mediaItems = mangaResponse.Data.Page.Media.Select(manga => new Items
             {
                 ItemName = manga.Title?.English ?? manga.Title?.Romaji ?? manga.Title?.Native ?? "N/A",
-                Description = manga.Description + "\n\nPowered by AniList API" ?? "No data in DB",
+                Description = (manga.Description ?? "No data in DB") + "\n\nPowered by AniList API",
                 Poster = manga.CoverImage?.Large ?? Data.noImageIcon,
                 Release_Date = $"{manga.StartDate?.Year}-{manga.StartDate?.Month:D2}-{manga.StartDate?.Day:D2}" ?? "No data in DB"
             }).ToList();

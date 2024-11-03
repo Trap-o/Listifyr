@@ -7,7 +7,7 @@ namespace Listifyr
     {
         private ObservableCollection<Catalogues>? catalogues;
 
-        public ObservableCollection<Catalogues> Catalogues
+        public ObservableCollection<Catalogues>? Catalogues
         {
             get => catalogues;
             set
@@ -21,7 +21,8 @@ namespace Listifyr
 
         public void OnPropertyChanged(string name)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
 
         public async Task LoadCataloguesAsync()

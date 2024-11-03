@@ -1,45 +1,34 @@
 using Listifyr.ItemTypes;
-using Listifyr.ProgramLogic.Pages.NestedPages;
-using System.Collections.ObjectModel;
 
 namespace Listifyr.ProgramLogic.Pages.NestedPages.CataloguesInteractionPages;
 
 public partial class CataloguePage : ContentPage
 {
-    private ObservableCollection<Items>? mediaItems;
-    public ObservableCollection<Items>? MediaItems
-    {
-        get => mediaItems;
-        set
-        {
-            mediaItems = value;
-            OnPropertyChanged("MediaItems");
-        }
-    }
-    private readonly string? _pageTitle;
     private int? catalogueID;
+    private Catalogues? Catalogues { get; set; }
 
     public CataloguePage() => InitializeComponent();
 
-    public CataloguePage(string title)
+    public CataloguePage(Catalogues catalogue)
     {
         InitializeComponent();
-        _pageTitle = title;
+        Catalogues = catalogue;
+        BindingContext = Catalogues;
+
     }
 
     protected async override void OnAppearing()
     {
-        Title = _pageTitle;
-
+        Title = Catalogues?.Name;
         try
         {
-            catalogueID = await App.Database.GetIDByNameAsync<Catalogues>("CatalogueID", "Catalogues", "Name", _pageTitle);
+            catalogueID = await App.Database.GetIDByNameAsync<Catalogues>("CatalogueID", "Catalogues", "Name", Catalogues?.Name);
             var items = await App.Database.LoadTableByIDAsync<Items>((int)catalogueID, "ID_Catalogue");
             var collectionView = this.FindByName<CollectionView>("ItemsCollectionView");
             collectionView.ItemsSource = items;
 
             if (items.Count == 0)
-                LabelForEmptyCatalogue.Text = $"Add your first {_pageTitle}'s media from categories!";
+                LabelForEmptyCatalogue.Text = $"Add your first {Catalogues?.Name}'s media from categories!";
             else
                 LabelForEmptyCatalogue.Text = "";
         }
@@ -65,6 +54,25 @@ public partial class CataloguePage : ContentPage
             {
                 await DisplayAlert("Error", $"Error description: {ex}", "OK");
             }
+        }
+    }
+
+    private async void RenameButton_Clicked(object sender, EventArgs e)
+    {
+        string newCatalogueName = await Shell.Current.DisplayPromptAsync("New name", "Enter new catalogue name (max. 15 characters):", maxLength: 15);
+        if (!string.IsNullOrWhiteSpace(newCatalogueName))
+        {
+            try
+            {
+                Catalogues.Name = newCatalogueName;
+                await App.Database.UpdateItemAsync("Name", "Catalogues", "CatalogueID", newCatalogueName, Catalogues.CatalogueID);
+
+            }
+            catch(Exception)
+            {
+                await Shell.Current.DisplayAlert("Error!", "Enter unique name for catalogue!", "OK");
+            }
+            OnAppearing();
         }
     }
 }
