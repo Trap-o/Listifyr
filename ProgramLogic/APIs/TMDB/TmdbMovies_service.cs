@@ -17,8 +17,8 @@ namespace Listifyr.ProgramLogic.APIs.TMDB
 
             var mediaItems = moviesResponse?.Results?.Select(movie => new Items
             {
-                ItemName = movie.Title ?? "M/A",
-                Description = movie.Overview + "\n\nPowered by The Movie Database (TMDB) API" ?? "No data in DB",
+                ItemName = movie.Title ?? "N/A",
+                Description = (movie.Overview ?? "No data in DB") + "\n\nPowered by The Movie Database (TMDB) API",
                 Poster = "https://image.tmdb.org/t/p/w500" + movie.PosterPath,
                 Release_Date = movie.Release_Date ?? "No data in DB"
             }).ToList();

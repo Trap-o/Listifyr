@@ -80,8 +80,7 @@ namespace Listifyr.ItemTypes
 
         private void RaisePropertyChanged(string value)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(value));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(value));
         }
 
     }

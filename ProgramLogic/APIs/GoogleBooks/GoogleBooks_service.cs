@@ -24,7 +24,7 @@ namespace Listifyr.ProgramLogic.APIs.GoogleBooks
                 return new Items
                 {
                     ItemName = books.VolumeInfo?.Title ?? "N/A",
-                    Description = books.VolumeInfo?.Description + "\n\nPowered by Google Books API" ?? "No data in DB",
+                    Description = (books.VolumeInfo?.Description ?? "No data in DB") + "\n\nPowered by Google Books API",
                     Poster = imageUrl?.Replace("http://", "https://"),
                     Release_Date = books.VolumeInfo?.PublishedDate ?? "No data in DB"
                 };

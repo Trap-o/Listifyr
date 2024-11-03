@@ -18,7 +18,7 @@ namespace Listifyr.ProgramLogic.APIs.TMDB
             var mediaItems = seriesResponse?.Results?.Select(series => new Items
             {
                 ItemName = series.Name ?? "N/A",
-                Description = series.Overview + "\n\nPowered by The Movie Database (TMDB) API" ?? "No data in DB",
+                Description = (series.Overview ?? "No data in DB") + "\n\nPowered by The Movie Database (TMDB) API",
                 Poster = "https://image.tmdb.org/t/p/w500" + series.PosterPath,
                 Release_Date = series.FirstAirDate ?? "No data in DB"
             }).ToList();

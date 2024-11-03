@@ -18,9 +18,7 @@ namespace Listifyr.ProgramLogic.APIs.ComicVine
             var mediaItems = comicsResponse?.Results?.Select(comics => new Items
             {
                 ItemName = comics.Name ?? (comics?.Volume?.Name + " " + comics?.IssueNumber) ?? "N/A",
-                Description = comics?.Description + "\n\nPowered by Comic Vine API" ??
-                              comics?.Deck + "\n\nPowered by Comic Vine APII" ??
-                              "No data in DB",
+                Description = (comics?.Description ?? comics?.Deck ?? "No data in DB") + "\n\nPowered by Comic Vine API",
                 Poster = comics?.Image?.OriginalUrl ?? Data.noImageIcon,
                 Release_Date = comics?.CoverDate ?? "No data in DB"
             }).ToList();
