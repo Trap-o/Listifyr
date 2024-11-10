@@ -5,9 +5,9 @@
              xmlns:local="clr-namespace:Listifyr"
              Title="Categories">
 
-    <ContentPage.BindingContext>
+    <!--<ContentPage.BindingContext>
         <local:CategoriesViewModel/>
-    </ContentPage.BindingContext>
+    </ContentPage.BindingContext>-->
 
     <ScrollView>
         <VerticalStackLayout BackgroundColor="#0F0606" Padding="20, 0" Spacing="25">

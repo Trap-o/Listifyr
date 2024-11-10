@@ -1,6 +1,7 @@
 ﻿using Listifyr.ItemTypes;
 using Listifyr.ProgramLogic.PrivateData;
 using Newtonsoft.Json;
+using System;
 
 namespace Listifyr.ProgramLogic.APIs
 {
@@ -8,31 +9,48 @@ namespace Listifyr.ProgramLogic.APIs
     {
         private const string apiUrlSearchGameID = "https://api.rawg.io/api/games?key=" + Data.RAWG_apiKey + "&page_size=20&search=";
 
-        public static async Task<List<Items>> SearchGamesAsync(string query)
+        public static async Task<(bool success, List<Items> results)> SearchGamesAsync(string query)
         {
             using HttpClient client = new();
             string url = apiUrlSearchGameID + query;
-            var response = await client.GetStringAsync(url);
-            var gamesResponse = JsonConvert.DeserializeObject<GamesResponse>(response);
-
-            var mediaItems = new List<Items>();
-
-            foreach (var game in gamesResponse?.Results)
+            try
             {
-                var detailsResponse = await client.GetStringAsync($"https://api.rawg.io/api/games/{game.Id}?key={Data.RAWG_apiKey}");
-                var gameDetailsResponse = JsonConvert.DeserializeObject<GameDetailResponse>(detailsResponse);
+                var response = await client.GetAsync(url);
 
-                var mediaItem = new Items
+                if (!response.IsSuccessStatusCode)
+                    return (false, new List<Items>());
+
+                var responseString = await response.Content.ReadAsStringAsync();
+                var gamesResponse = JsonConvert.DeserializeObject<GamesResponse>(responseString);
+
+                var mediaItems = new List<Items>();
+
+                foreach (var game in gamesResponse?.Results)
                 {
-                    ItemName = gameDetailsResponse?.Name ?? "N/A",
-                    Description = (gameDetailsResponse?.Description ?? gameDetailsResponse?.RedditDescription ?? "No data in DB") +
-                                  "\n\nPowered by RAWG Video Games Database API",
-                    Poster = gameDetailsResponse?.BackgroundImage ?? gameDetailsResponse?.BackgroundImageAdditional ?? Data.noImageIcon,
-                    Release_Date = gameDetailsResponse?.Released ?? "No data in DB"
-                };
-                mediaItems.Add(mediaItem);
+                    var detailsResponse = await client.GetAsync($"https://api.rawg.io/api/games/{game.Id}?key={Data.RAWG_apiKey}");
+
+                    if (!response.IsSuccessStatusCode)
+                        return (false, new List<Items>());
+
+                    var detailsResponseString = await detailsResponse.Content.ReadAsStringAsync();
+                    var gameDetailsResponse = JsonConvert.DeserializeObject<GameDetailResponse>(detailsResponseString);
+
+                    var mediaItem = new Items
+                    {
+                        ItemName = gameDetailsResponse?.Name ?? "N/A",
+                        Description = (gameDetailsResponse?.Description ?? gameDetailsResponse?.RedditDescription ?? "No data in DB") +
+                                      "\n\nPowered by RAWG Video Games Database API",
+                        Poster = gameDetailsResponse?.BackgroundImage ?? gameDetailsResponse?.BackgroundImageAdditional ?? Data.noImageIcon,
+                        Release_Date = gameDetailsResponse?.Released ?? "No data in DB"
+                    };
+                    mediaItems.Add(mediaItem);
+                }
+                return (true, mediaItems ?? new List<Items>());
             }
-            return mediaItems;
+            catch (Exception ex)
+            {
+                return (false, new List<Items>());
+            }
         }
 
         private class GamesResponse

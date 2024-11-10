@@ -9,7 +9,7 @@ namespace Listifyr.ProgramLogic.APIs.AniList
     {
         private const string apiURL = "https://graphql.anilist.co";
 
-        public static async Task<List<Items>> SearchRanobeAsync(string query)
+        public static async Task<(bool success, List<Items> results)> SearchRanobeAsync(string query)
         {
             using HttpClient client = new();
             var queryObject = new
@@ -39,22 +39,33 @@ namespace Listifyr.ProgramLogic.APIs.AniList
             };
 
             var content = new StringContent(JsonConvert.SerializeObject(queryObject), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(apiURL, content);
-            var responseString = await response.Content.ReadAsStringAsync();
-            var ranobeResponse = JsonConvert.DeserializeObject<AniListApiResponse>(responseString);
-
-            if (ranobeResponse?.Data?.Page?.Media == null || ranobeResponse.Data.Page.Media.Count == 0)
-                return [];
-
-            var mediaItems = ranobeResponse.Data.Page.Media.Select(ranobe => new Items
+            try
             {
-                ItemName = ranobe.Title?.English ?? ranobe.Title?.Romaji ?? ranobe.Title?.Native ?? "N/A",
-                Description = (ranobe.Description ?? "No data in DB") + "\n\nPowered by AniList API",
-                Poster = ranobe.CoverImage?.Large ?? Data.noImageIcon,
-                Release_Date = $"{ranobe.StartDate?.Year}-{ranobe.StartDate?.Month:D2}-{ranobe.StartDate?.Day:D2}" ?? "No data in DB"
-            }).ToList();
+                var response = await client.PostAsync(apiURL, content);
 
-            return mediaItems;
+                if (!response.IsSuccessStatusCode)
+                    return (false, new List<Items>());
+
+                var responseString = await response.Content.ReadAsStringAsync();
+                var ranobeResponse = JsonConvert.DeserializeObject<AniListApiResponse>(responseString);
+
+                if (ranobeResponse?.Data?.Page?.Media == null || ranobeResponse.Data.Page.Media.Count == 0)
+                    return (true, new List<Items>());
+
+                var mediaItems = ranobeResponse.Data.Page.Media.Select(ranobe => new Items
+                {
+                    ItemName = ranobe.Title?.English ?? ranobe.Title?.Romaji ?? ranobe.Title?.Native ?? "N/A",
+                    Description = (ranobe.Description ?? "No data in DB") + "\n\nPowered by AniList API",
+                    Poster = ranobe.CoverImage?.Large ?? Data.noImageIcon,
+                    Release_Date = $"{ranobe.StartDate?.Year}-{ranobe.StartDate?.Month:D2}-{ranobe.StartDate?.Day:D2}" ?? "No data in DB"
+                }).ToList();
+
+                return (true, mediaItems);
+            }
+            catch (Exception ex)
+            {
+                return (false, new List<Items>());
+            }
         }
 
         private class AniListApiResponse

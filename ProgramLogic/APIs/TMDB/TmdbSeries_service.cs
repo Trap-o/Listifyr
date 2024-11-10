@@ -8,22 +8,34 @@ namespace Listifyr.ProgramLogic.APIs.TMDB
     {
         private const string apiUrl = "https://api.themoviedb.org/3/search/tv?api_key=" + Data.TMDB_apiKey + "&include_adult=true&language=en-US&page=1&query=";
 
-        public static async Task<List<Items>> SearchSeriesAsync(string query)
+        public static async Task<(bool success, List<Items> results)> SearchSeriesAsync(string query)
         {
             using HttpClient client = new();
             string url = apiUrl + query;
-            var response = await client.GetStringAsync(url);
-            var seriesResponse = JsonConvert.DeserializeObject<SeriesResponse>(response);
-
-            var mediaItems = seriesResponse?.Results?.Select(series => new Items
+            try
             {
-                ItemName = series.Name ?? "N/A",
-                Description = (series.Overview ?? "No data in DB") + "\n\nPowered by The Movie Database (TMDB) API",
-                Poster = "https://image.tmdb.org/t/p/w500" + series.PosterPath,
-                Release_Date = series.FirstAirDate ?? "No data in DB"
-            }).ToList();
+                var response = await client.GetAsync(url);
 
-            return mediaItems;
+                if (!response.IsSuccessStatusCode)
+                    return (false, new List<Items>());
+
+                var responseString = await response.Content.ReadAsStringAsync();
+                var seriesResponse = JsonConvert.DeserializeObject<SeriesResponse>(responseString);
+
+                var mediaItems = seriesResponse?.Results?.Select(series => new Items
+                {
+                    ItemName = series.Name ?? "N/A",
+                    Description = (series.Overview ?? "No data in DB") + "\n\nPowered by The Movie Database (TMDB) API",
+                    Poster = "https://image.tmdb.org/t/p/w500" + series.PosterPath,
+                    Release_Date = series.FirstAirDate ?? "No data in DB"
+                }).ToList();
+
+                return (true, mediaItems ?? new List<Items>());
+            }
+            catch (Exception ex)
+            {
+                return (false, new List<Items>());
+            }
         }
 
         private class SeriesResponse
