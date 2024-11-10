@@ -8,29 +8,42 @@ namespace Listifyr.ProgramLogic.APIs.GoogleBooks
     {
         private const string apiUrl = "https://www.googleapis.com/books/v1/volumes/?key=" + Data.GoogleBooks_apiKey + "&q=intitle:";
 
-        public static async Task<List<Items>> SearchBooksAsync(string query)
+        public static async Task<(bool success, List<Items> results)> SearchBooksAsync(string query)
         {
             using HttpClient client = new();
             string url = apiUrl + query;
-            var response = await client.GetStringAsync(url);
-            var booksResponse = JsonConvert.DeserializeObject<BooksResponse>(response);
 
-            var mediaItems = booksResponse?.Items?.Select(books =>
+            try
             {
-                var imageUrl = books.VolumeInfo?.ImageLinks?.Medium ??
-                               books.VolumeInfo?.ImageLinks?.Thumbnail ??
-                               books.VolumeInfo?.ImageLinks?.SmallThumbnail ??
-                               Data.noImageIcon;
-                return new Items
-                {
-                    ItemName = books.VolumeInfo?.Title ?? "N/A",
-                    Description = (books.VolumeInfo?.Description ?? "No data in DB") + "\n\nPowered by Google Books API",
-                    Poster = imageUrl?.Replace("http://", "https://"),
-                    Release_Date = books.VolumeInfo?.PublishedDate ?? "No data in DB"
-                };
-            }).ToList();
+                var response = await client.GetAsync(url);
 
-            return mediaItems;
+                if (!response.IsSuccessStatusCode)
+                    return (false, new List<Items>());
+
+                var responseString = await response.Content.ReadAsStringAsync();
+                var booksResponse = JsonConvert.DeserializeObject<BooksResponse>(responseString);
+
+                var mediaItems = booksResponse?.Items?.Select(books =>
+                {
+                    var imageUrl = books.VolumeInfo?.ImageLinks?.Medium ??
+                                   books.VolumeInfo?.ImageLinks?.Thumbnail ??
+                                   books.VolumeInfo?.ImageLinks?.SmallThumbnail ??
+                                   Data.noImageIcon;
+                    return new Items
+                    {
+                        ItemName = books.VolumeInfo?.Title ?? "N/A",
+                        Description = (books.VolumeInfo?.Description ?? "No data in DB") + "\n\nPowered by Google Books API",
+                        Poster = imageUrl?.Replace("http://", "https://"),
+                        Release_Date = books.VolumeInfo?.PublishedDate ?? "No data in DB"
+                    };
+                }).ToList();
+
+                return (true, mediaItems ?? new List<Items>());
+            }
+            catch (Exception ex)
+            {
+                return (false, new List<Items>());
+            }
         }
 
         private class BooksResponse

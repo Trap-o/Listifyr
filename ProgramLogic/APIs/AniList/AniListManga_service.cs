@@ -9,7 +9,7 @@ namespace Listifyr.ProgramLogic.APIs.AniList
     {
         private const string apiURL = "https://graphql.anilist.co";
 
-        public static async Task<List<Items>> SearchMangaAsync(string query)
+        public static async Task<(bool success, List<Items> results)> SearchMangaAsync(string query)
         {
             using HttpClient client = new();
             var queryObject = new
@@ -39,22 +39,33 @@ namespace Listifyr.ProgramLogic.APIs.AniList
             };
 
             var content = new StringContent(JsonConvert.SerializeObject(queryObject), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(apiURL, content);
-            var responseString = await response.Content.ReadAsStringAsync();
-            var mangaResponse = JsonConvert.DeserializeObject<AniListApiResponse>(responseString);
-
-            if (mangaResponse?.Data?.Page?.Media == null || mangaResponse.Data.Page.Media.Count == 0)
-                return [];
-
-            var mediaItems = mangaResponse.Data.Page.Media.Select(manga => new Items
+            try
             {
-                ItemName = manga.Title?.English ?? manga.Title?.Romaji ?? manga.Title?.Native ?? "N/A",
-                Description = (manga.Description ?? "No data in DB") + "\n\nPowered by AniList API",
-                Poster = manga.CoverImage?.Large ?? Data.noImageIcon,
-                Release_Date = $"{manga.StartDate?.Year}-{manga.StartDate?.Month:D2}-{manga.StartDate?.Day:D2}" ?? "No data in DB"
-            }).ToList();
+                var response = await client.PostAsync(apiURL, content);
 
-            return mediaItems;
+                if (!response.IsSuccessStatusCode)
+                    return (false, new List<Items>());
+
+                var responseString = await response.Content.ReadAsStringAsync();
+                var mangaResponse = JsonConvert.DeserializeObject<AniListApiResponse>(responseString);
+
+                if (mangaResponse?.Data?.Page?.Media == null || mangaResponse.Data.Page.Media.Count == 0)
+                    return (true, new List<Items>());
+
+                var mediaItems = mangaResponse.Data.Page.Media.Select(manga => new Items
+                {
+                    ItemName = manga.Title?.English ?? manga.Title?.Romaji ?? manga.Title?.Native ?? "N/A",
+                    Description = (manga.Description ?? "No data in DB") + "\n\nPowered by AniList API",
+                    Poster = manga.CoverImage?.Large ?? Data.noImageIcon,
+                    Release_Date = $"{manga.StartDate?.Year}-{manga.StartDate?.Month:D2}-{manga.StartDate?.Day:D2}" ?? "No data in DB"
+                }).ToList();
+
+                return (true, mediaItems);
+            }
+            catch (Exception ex)
+            {
+                return (false, new List<Items>());
+            }
         }
 
         private class AniListApiResponse
